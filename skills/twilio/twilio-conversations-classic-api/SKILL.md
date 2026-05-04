@@ -1,5 +1,5 @@
 ---
-name: twilio-conversations-api
+name: twilio-conversations-classic-api
 description: >
   Build multi-channel messaging experiences using Twilio Conversations (classic) API.
   Covers creating conversations, adding participants (SMS, WhatsApp, chat),
