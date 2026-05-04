@@ -1,0 +1,18 @@
+{
+  "name": "twilio",
+  "owner": {
+    "name": "Twilio",
+    "email": "developer-relations@twilio.com"
+  },
+  "plugins": [
+    {
+      "name": "twilio-developer-kit",
+      "source": "./",
+      "description": "Twilio Skills for building, debugging, and shipping on Twilio",
+      "version": "0.1.0",
+      "author": {
+        "name": "Twilio"
+      }
+    }
+  ]
+}

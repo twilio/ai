@@ -1,0 +1,30 @@
+{
+  "name": "twilio",
+  "owner": {
+    "name": "Twilio"
+  },
+  "metadata": {
+    "description": "Twilio Claude Skills — procedural knowledge for building with Twilio APIs, voice agents, messaging, and compliance workflows.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "twilio-skills",
+      "source": ".",
+      "description": "Complete set of Twilio skills for Claude Code. Covers Setup, Planner, Product, and Guardrail skills across SMS, Voice, WhatsApp, identity verification, compliance, and 30+ products.",
+      "version": "0.1.0",
+      "keywords": [
+        "twilio",
+        "sms",
+        "voice",
+        "whatsapp",
+        "messaging",
+        "verify",
+        "compliance",
+        "conversation-relay",
+        "sendgrid",
+        "email"
+      ]
+    }
+  ]
+}
