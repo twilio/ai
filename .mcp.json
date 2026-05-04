@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "twilio-mcp": {
+      "type": "remote",
+      "url": "https://mcp.twilio.com/docs"
+    }
+  }
+}
