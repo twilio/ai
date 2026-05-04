@@ -32,7 +32,7 @@ Covers: SMS, MMS, WhatsApp, RCS, Voice, Verify, SendGrid, Conversations, Messagi
 ```bash
 # Add the Twilio marketplace and install the plugin
 /plugin marketplace add twilio/ai
-/plugin install twilio-skills@twilio-skills
+/plugin install twilio-skills@twilio
 ```
 
 Skills activate automatically when your prompt matches a covered use case. You can also invoke them directly:

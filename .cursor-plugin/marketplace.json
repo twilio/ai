@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "twilio-skills",
+      "name": "twilio-developer-kit",
       "source": "./",
       "description": "Twilio Skills for building, debugging, and shipping on Twilio",
       "version": "0.1.0",
