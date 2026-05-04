@@ -11,7 +11,7 @@
     {
       "name": "twilio-skills",
       "source": ".",
-      "description": "Complete set of Twilio skills for Claude Code. Covers Setup, Planner, Product, and Guardrail skills across SMS, Voice, WhatsApp, Sierra AI, identity verification, and compliance.",
+      "description": "Complete set of Twilio skills for Claude Code. Covers Setup, Planner, Product, and Guardrail skills across SMS, Voice, WhatsApp, identity verification, compliance, and 30+ products.",
       "version": "0.1.0",
       "keywords": [
         "twilio",

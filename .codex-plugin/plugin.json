@@ -1,7 +1,7 @@
 {
   "name": "twilio-developer-toolkit",
   "version": "0.1.0",
-  "description": "Two tools for building on Twilio. Skills provide procedural knowledge — which APIs to use, in what order, and what to avoid. Twilio MCP Docs provides real-time hybrid search across Twilio and SendGrid OpenAPI specs, public documentation, and support articles to discover the right APIs, retrieve full parameter schemas, and debug error codes.",
+  "description": "Twilio Skills provide procedural knowledge for AI coding agents — which APIs to use, in what order, and what to avoid. Covers SMS, Voice, WhatsApp, Verify, SendGrid, Compliance, and 30+ products.",
   "author": {
     "name": "Twilio",
     "url": "https://www.twilio.com"
@@ -21,16 +21,14 @@
     "email",
     "compliance",
     "conversation-relay",
-    "mcp",
-    "api-docs",
+    "api",
     "segment"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Twilio Developer Toolkit",
-    "shortDescription": "Skills + MCP for building, debugging, and shipping on Twilio",
-    "longDescription": "Two complementary tools for Twilio developers:\n\n• Skills — Procedural knowledge that guides you to the right Twilio APIs for your use case. Covers channel selection, production best practices, compliance requirements, and common pitfalls across SMS, Voice, WhatsApp, Verify, SendGrid, and 30+ products.\n\n• Twilio MCP Docs — Real-time hybrid search (semantic + lexical) across Twilio and SendGrid OpenAPI specs, public documentation, support articles, and Segment docs. Two tools: twilio__search discovers the right API endpoints and documentation via topic-filtered search (source: \"api\" for specs, \"docs\" for knowledge base, \"all\" for both), and twilio__retrieve returns full parameter schemas and response definitions. Always current — covers new APIs, versions, and error codes as they ship, including APIs released after the model's training cutoff.",
+    "shortDescription": "Twilio Skills for building, debugging, and shipping on Twilio",
+    "longDescription": "Procedural knowledge that guides AI coding agents to the right Twilio APIs for any use case. Covers channel selection, production best practices, compliance requirements, and common pitfalls across SMS, Voice, WhatsApp, Verify, SendGrid, and 30+ products. Skills follow a progressive disclosure architecture — your agent sees lightweight metadata at startup and loads full guidance only when a task matches.",
     "developerName": "Twilio",
     "category": "APIs",
     "capabilities": ["Read", "Write"],
@@ -38,8 +36,8 @@
     "defaultPrompt": [
       "Help me send an SMS notification with delivery tracking",
       "What Twilio API should I use to verify a user's phone number?",
-      "Search Twilio docs for how to add a participant to a Conversation",
-      "What is Twilio error code 14107?"
+      "How do I register for A2P 10DLC before sending US SMS?",
+      "Build me an AI voice agent with Twilio Conversation Relay"
     ],
     "brandColor": "#F22F46",
     "logo": "./assets/logo.svg"
