@@ -88,12 +88,6 @@ Your agent should provide guidance on Messaging Services, A2P compliance, error 
 
 ---
 
-## Coming soon
-
-- **Twilio MCP Server** — Real-time search across 1,800+ Twilio API endpoints, always current
-
----
-
 ## Feedback
 
 - Questions and feedback: questions-skills@twilio.com
