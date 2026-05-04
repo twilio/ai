@@ -1,0 +1,32 @@
+{
+  "name": "twilio-developer-toolkit",
+  "displayName": "Twilio Developer Toolkit",
+  "version": "0.1.0",
+  "description": "Two tools for building on Twilio. Skills provide procedural knowledge — which APIs to use, in what order, and what to avoid. Twilio MCP Docs provides real-time hybrid search across Twilio and SendGrid OpenAPI specs, public documentation, and support articles to discover the right APIs, retrieve full parameter schemas, and debug error codes.",
+  "author": {
+    "name": "Twilio",
+    "url": "https://www.twilio.com"
+  },
+  "homepage": "https://www.twilio.com/docs",
+  "repository": "https://github.com/twilio/ai",
+  "license": "MIT",
+  "keywords": [
+    "twilio",
+    "sms",
+    "voice",
+    "whatsapp",
+    "rcs",
+    "messaging",
+    "verify",
+    "sendgrid",
+    "email",
+    "compliance",
+    "conversation-relay",
+    "mcp",
+    "api-docs",
+    "segment"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "logo": "./assets/logo.svg"
+}
