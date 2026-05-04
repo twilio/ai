@@ -1,5 +1,5 @@
 ---
-name: twilio-isv-sms-best-practices
+name: twilio-sms-isv-setup
 description: >
   Best practices for ISVs (Independent Software Vendors) building SMS
   features into multi-tenant SaaS platforms using Twilio. Covers customer

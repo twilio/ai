@@ -32,7 +32,7 @@ Covers: SMS, MMS, WhatsApp, RCS, Voice, Verify, SendGrid, Conversations, Messagi
 ```bash
 # Add the Twilio marketplace and install the plugin
 /plugin marketplace add twilio/ai
-/plugin install twilio-developer-toolkit@twilio
+/plugin install twilio-skills@twilio-skills
 ```
 
 Skills activate automatically when your prompt matches a covered use case. You can also invoke them directly:
@@ -47,9 +47,8 @@ Skills activate automatically when your prompt matches a covered use case. You c
 Skills follow the open [Agent Skills](https://agentskills.io) standard. Cursor auto-discovers them from `.agents/skills/` in your workspace:
 
 ```bash
-# Clone into your project
 git clone https://github.com/twilio/ai.git .twilio-ai
-cp -r .twilio-ai/skills/.agents/skills/ .agents/skills/
+cp -r .twilio-ai/skills/ .agents/skills/
 ```
 
 Type `/skills` in Cursor's Agent mode to see available Twilio skills.
@@ -70,7 +69,7 @@ Clone and copy:
 
 ```bash
 git clone https://github.com/twilio/ai.git
-cp -r ai/skills/.agents/skills/ ~/.agents/skills/
+cp -r ai/skills/ ~/.agents/skills/
 ```
 
 #### Other tools (GitHub Copilot, Gemini CLI, JetBrains, etc.)

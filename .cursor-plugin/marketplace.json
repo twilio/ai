@@ -6,9 +6,9 @@
   },
   "plugins": [
     {
-      "name": "twilio-developer-toolkit",
+      "name": "twilio-skills",
       "source": "./",
-      "description": "Skills + MCP for building, debugging, and shipping on Twilio",
+      "description": "Twilio Skills for building, debugging, and shipping on Twilio",
       "version": "0.1.0",
       "author": {
         "name": "Twilio"
