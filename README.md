@@ -32,7 +32,7 @@ Covers: SMS, MMS, WhatsApp, RCS, Voice, Verify, SendGrid, Conversations, Messagi
 ```bash
 # Add the Twilio marketplace and install the plugin
 /plugin marketplace add twilio/ai
-/plugin install twilio-skills@twilio
+/plugin install twilio-developer-kit@twilio
 ```
 
 Skills activate automatically when your prompt matches a covered use case. You can also invoke them directly:
@@ -85,12 +85,6 @@ After setup, ask your agent:
 > "How do I send an SMS with Twilio?"
 
 Your agent should provide guidance on Messaging Services, A2P compliance, error handling, and recommend specific skills for deeper implementation — rather than relying solely on training data.
-
----
-
-## Coming soon
-
-- **Twilio MCP Server** — Real-time search across 1,800+ Twilio API endpoints, always current
 
 ---
 
