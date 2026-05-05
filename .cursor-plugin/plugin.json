@@ -25,6 +25,6 @@
     "api",
     "segment"
   ],
-  "skills": "./skills/",
+  "skills": ["./skills/twilio/", "./skills/sendgrid/"],
   "logo": "./assets/logo.svg"
 }
