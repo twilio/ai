@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "twilio-developer-kit",
-      "source": ".",
+      "source": "./",
       "description": "Complete set of Twilio skills for Claude Code. Covers Setup, Planner, Product, and Guardrail skills across SMS, Voice, WhatsApp, identity verification, compliance, and 30+ products.",
       "version": "0.1.0",
       "keywords": [
