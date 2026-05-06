@@ -4,15 +4,15 @@
     "name": "Twilio"
   },
   "metadata": {
-    "description": "Twilio Claude Skills — procedural knowledge for building with Twilio APIs, voice agents, messaging, and compliance workflows.",
-    "version": "0.1.0"
+    "description": "Twilio Developer Kit — Skills + MCP for building with Twilio APIs, voice agents, messaging, and compliance workflows.",
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "twilio-developer-kit",
       "source": "./",
       "description": "Complete set of Twilio skills for Claude Code. Covers Setup, Planner, Product, and Guardrail skills across SMS, Voice, WhatsApp, identity verification, compliance, and 30+ products.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "keywords": [
         "twilio",
         "sms",
@@ -24,7 +24,13 @@
         "conversation-relay",
         "sendgrid",
         "email"
-      ]
+      ],
+      "mcp": {
+        "twilio-docs": {
+          "command": "npx",
+          "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://mcp.twilio.com/docs"]
+        }
+      }
     }
   ]
 }
