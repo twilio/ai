@@ -248,6 +248,8 @@ const service = await client.verify.v2.services.create({
 - Phone number validation: Verify checks line type before sending (if `lookup_enabled=True`)
 - Fraud Guard: geo-permissions, rate anomaly detection, SMS pumping protection
 
+**International OTP traffic warning:** International numbers are high-risk for SMS pumping — fraudsters trigger OTPs to premium-rate destinations to generate revenue. Verify's Fraud Guard handles this automatically when enabled. If you're building custom OTP with Programmable Messaging instead, enable SMS Pumping Protection on your Messaging Service (see `twilio-messaging-services`). Always restrict geo-permissions to only countries where you have real users.
+
 ---
 
 ## CANNOT

@@ -114,7 +114,7 @@ twilio phone-numbers:update +14155551234 --sms-url "https://your-tunnel-url.exam
 
 # Emulate webhook events locally (requires plugin)
 twilio plugins:install @twilio-labs/plugin-webhook
-twilio webhook:emulate --type sms --url http://localhost:3000/sms
+twilio webhook:invoke http://localhost:3000/sms --type sms
 ```
 
 **Local development:** The CLI rejects `localhost` URLs directly. Tunneling services such as ngrok are not bundled with twilio-cli. install one separately, then set the public tunnel URL as your webhook. 

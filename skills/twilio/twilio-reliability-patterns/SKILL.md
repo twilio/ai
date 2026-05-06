@@ -214,7 +214,7 @@ async def send_with_fallback(client, to, message, messaging_service_sid):
     try:
         call = client.calls.create(
             to=to, from_="+15551234567",
-            twiml=f"<Response><Say>{message}</Say></Response>",  # Never interpolate untrusted input here
+            twiml=f"<Response><Say>{message}</Say></Response>",
             status_callback="https://yourapp.com/call-status"
         )
         return {"channel": "voice", "sid": call.sid}

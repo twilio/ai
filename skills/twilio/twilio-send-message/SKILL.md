@@ -18,7 +18,7 @@ description: >
 
 | Channel | `to` format | Notes | Template required? |
 |---------|-------------|-------|--------------------|
-| SMS/MMS | `+15551234567` | MMS: US/CA only | No |
+| SMS/MMS | `+15551234567` | MMS: US/CA/AU only | No |
 | RCS (with SMS fallback) | `+15551234567` | Send via Messaging Service that has both an RCS sender and an SMS sender — Twilio attempts RCS first, falls back to SMS on failure | No |
 | RCS (no fallback) | `rcs:+15551234567` | Forces RCS only — fails if recipient isn't RCS-capable | No |
 | WhatsApp | `whatsapp:+15551234567` | Send via `whatsapp:`-prefixed `from` | Outside 24-hr window: yes |

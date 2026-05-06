@@ -29,7 +29,7 @@ Every Twilio customer automatically gets an Organization when they sign up (auto
 |-----------|----------------------------------|-------------|
 | **Management** | Console UI + Organizations API | REST API (`/2010-04-01/Accounts`) |
 | **Billing** | Independent per account | Consolidated to parent account |
-| **Account limit** | 10 per Organization (default) | 1,000 per parent (default) |
+| **Account limit** | 10 per Organization (default) | 1 per unupgraded account; 1,000 per upgraded account (contact AE for more) |
 | **User management** | Full lifecycle: invite, roles, SSO, SCIM | None — no user concept |
 | **SSO/SCIM** | Supported | Not applicable |
 | **HIPAA designation** | Per-account toggle in Admin console | Inherits from parent (new only) |
@@ -56,9 +56,10 @@ The Organization creator is automatically assigned the Owner role.
 
 ### Find Your Organization
 
-Your Organization was created automatically at signup. Access it at:
+All Twilio customers have an Organization (auto-created at signup). Access it via:
 
-**Console > Admin** (upper-left dropdown) — this opens the Organization admin panel.
+- **Console > Settings** (gear icon) — shows Organization settings, or
+- **Twilio Admin** link in the top-right navigation — opens the Organization admin panel
 
 ### Add Accounts to Your Organization
 

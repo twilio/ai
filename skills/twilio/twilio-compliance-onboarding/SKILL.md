@@ -135,7 +135,7 @@ If you send both marketing and transactional messages (e.g., order confirmations
 | URL shorteners | Using bit.ly links | Public URL shorteners are forbidden — use branded/vanity domains |
 | Privacy policy | States data IS shared | Must state data is NOT shared with third parties |
 | Links | Behind login or not accessible | All links must be publicly accessible to reviewers |
-| Consent | Combined consent for transactional + marketing | Separate opt-ins required per campaign type |
+| Consent | Single opt-in covering all message types | Each sub-use case in a Mixed campaign still needs its own documented opt-in method |
 | Mixed campaign | Leaving sub-use cases undescribed | Each sub-use case must be explained in description |
 
 Failed campaigns can now be edited directly in Console (API editing is private beta).

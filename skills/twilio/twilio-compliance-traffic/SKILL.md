@@ -242,7 +242,7 @@ consent_record = {
 
 - **Cannot rely on Twilio to enforce compliance rules** — Your application must implement TCPA, GDPR, PCI, and other rules. Twilio provides tools, not enforcement.
 - **Cannot apply A2P 10DLC registration outside the US** — Other countries have their own regimes
-- **Cannot use public link shorteners (bit.ly, etc.)** — Messages with public short links are filtered by carriers. Use Twilio link shortening via Messaging Services instead.
+- **Cannot use public link shorteners (bit.ly, tinyurl, goo.gl, short.io, etc.)** — Messages with public short links are categorically filtered by carriers. Use a branded/vanity short domain (e.g., `go.yourcompany.com`) configured in your Messaging Service. Twilio's shared `twil.io` domain is not sufficient — you must register your own branded domain in Console under Messaging > Link Shortening.
 - **Cannot reverse PCI Mode** — Irreversible and account-wide once enabled
 - **Cannot fully clear message logs via GDPR deletion** — Twilio retains internal message logs for 400 days regardless of deletion requests
 - **Cannot assume regulations are static** — Compliance requirements change. Verify current regulations before launch.

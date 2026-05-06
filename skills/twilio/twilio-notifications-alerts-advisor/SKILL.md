@@ -83,7 +83,7 @@ If the developer's use case is actually promotional → redirect to `twilio-mark
 - **Shipping updates** → SMS (time-sensitive, short content) or WhatsApp (international)
 - **Appointment reminders** → SMS (24hr before) + Voice (1hr before for critical)
 **Best practice:** Always include StatusCallback URL. Even for simple sends. Without it, you have zero delivery visibility.
-**Skills to install:** `twilio-sms-send-message` and/or `twilio-sendgrid-email-send` (SendGrid API key, SG.-prefix)
+**Skills to install:** `twilio-sms-send-message` and/or `twilio-email-send` (Account SID + Auth Token → comms.twilio.com) or `twilio-sendgrid-email-send` (SendGrid API key, SG.-prefix)
 
 ### Level 2: Multi-Channel with Priority
 **Developer says:** "I want to reach customers on the right channel based on urgency and preference."
@@ -152,7 +152,7 @@ Recommended Architecture: [Level 1-3 description]
 
 Product Skills to Install:
 - twilio-sms-send-message (if SMS notifications)
-- twilio-sendgrid-email-send (if email notifications)
+- twilio-email-send (if email notifications, Twilio creds — Account SID + Auth Token) or twilio-sendgrid-email-send (if SendGrid API key, SG.-prefix)
 - twilio-voice-outbound-calls (if voice alerts or fallback)
 - twilio-whatsapp-send-message (if WhatsApp notifications)
 - twilio-messaging-services (if volume > 100/day or multi-number)

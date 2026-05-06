@@ -60,26 +60,34 @@ alerts.forEach(a => {
 When something fails, work through these layers in order:
 
 ```
-1. Check the Console Debugger for errors/warnings
-   (Console > Develop > Error logs)
+1. Check status callbacks FIRST
+   (Did your endpoint receive delivery/call status? What error code?)
    |
-2. Query Monitor Alerts API for programmatic detail
-   (Full HTTP request/response data per alert)
+2. Check the resource directly via REST API
+   (GET /Messages/{sid} or /Calls/{sid} — current state + error_code)
    |
-3. Check resource status via REST API
-   (Message resource, Call resource -- current state)
+3. Check number reputation / sender registration
+   (Is the number spam-flagged? Is A2P 10DLC registered? Toll-free verified?)
    |
-4. Review status callbacks
-   (Did your endpoint receive them? What status?)
+4. Check the Console Debugger for webhook/TwiML errors
+   (Console > Monitor > Errors — shows HTTP request/response details)
    |
 5. Check your webhook endpoint
-   (Is it reachable? Responding within 15s? Returning valid TwiML?)
+   (Is it reachable? Responding within 15s? Returning valid TwiML/200?)
    |
-6. Check Event Streams
-   (For high-volume or cross-product patterns)
+6. Query Monitor Alerts API or Event Streams
+   (For patterns across many messages/calls, or historical analysis)
 ```
 
-**Rule of thumb:** If the Console Debugger shows no errors, the problem is likely in your application (webhook endpoint, TwiML, business logic), not in Twilio.
+**Why status callbacks first:** Status callbacks tell you the exact error code for the specific message or call that failed. The Console Debugger aggregates errors across your account and may not surface the one you're looking for. Start specific, then broaden.
+
+**Number reputation checklist:**
+- SMS 30007 (carrier filtering) → Check A2P 10DLC registration status, content for spam triggers
+- SMS 30034 → Sender not registered for A2P 10DLC — register brand + campaign
+- Calls going to voicemail / "Spam Likely" → Check STIR/SHAKEN attestation, Voice Integrity status (see `twilio-numbers-senders`)
+- Toll-free SMS blocked → Check toll-free verification status
+
+**Rule of thumb:** If status callbacks show `delivered` but the user says they didn't receive it, the issue is on the carrier/device side (not Twilio). If the Console Debugger shows no errors at all, the problem is in your application (webhook, TwiML, business logic).
 
 ### 2. Console Debugger
 

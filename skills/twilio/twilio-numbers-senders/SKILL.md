@@ -102,7 +102,7 @@ If making outbound voice calls, these programs improve answer rates:
 
 | Program | What it does | Carriers | Prerequisites |
 |---------|-------------|----------|---------------|
-| **STIR/SHAKEN** | Level A attestation = trusted caller ID | US only | Trust Hub Business Profile + EIN |
+| **STIR/SHAKEN** | Level A attestation = trusted caller ID | US and Canada | Trust Hub Business Profile + EIN |
 | **Voice Integrity** | Remediates spam/scam labels | T-Mobile, AT&T, Verizon (coming) | Approved Business Profile + US address |
 | **Branded Calling** | Shows name + logo on caller ID | T-Mobile, Verizon (Public Beta) | STIR/SHAKEN + Trust Hub profile |
 | **CNAM** | Displays business name on caller ID | US long codes only (not toll-free) | EIN or DUNS number |
@@ -110,6 +110,64 @@ If making outbound voice calls, these programs improve answer rates:
 **Priority order:** STIR/SHAKEN first (required for Level A attestation) → Voice Integrity (spam label remediation) → Branded Calling (visual caller ID, mobile only) → CNAM (simplest, lowest impact, landlines by default).
 
 **Docs:** [STIR/SHAKEN overview](https://www.twilio.com/docs/voice/trusted-calling-with-shakenstir) | [Voice Integrity overview](https://www.twilio.com/docs/voice/spam-monitoring-with-voiceintegrity) | [Branded Calling overview](https://www.twilio.com/docs/voice/branded-calling) | [CNAM overview](https://www.twilio.com/docs/voice/brand-your-calls-using-cnam)
+
+### Branded Calling: Prerequisites & Display Standards
+
+The call trust stack is layered — each product builds on the one below:
+
+```
+Layer 4: Enhanced Branded Calling  (name + logo + call reason)
+         ↑ requires
+Layer 3: Basic Branded Calling     (business name display)
+         ↑ requires
+Layer 2: Voice Integrity           (spam label remediation)
+         ↑ requires
+Layer 1: SHAKEN/STIR               (attestation — auto-applied with approved profile)
+         ↑ requires
+Layer 0: Primary Customer Profile  (Trust Hub business identity)
+```
+
+**Prerequisites for Basic Branded Calling:**
+1. Approved Primary Customer Profile in Trust Hub (EIN, business name, address, authorized rep) — 1-3 business days
+2. SHAKEN/STIR — automatic once profile is approved
+3. Signed Letter of Authorization (LOA) for the phone numbers
+4. Basic Branded Calling trust product submitted + approved — 2-4 weeks
+
+**Additional prerequisites for Enhanced Branded Calling:**
+5. Approved Voice Integrity trust product — 3-7 business days carrier propagation
+6. Enhanced Branded Calling trust product — 3-6 weeks
+
+**Phone number eligibility:**
+- Local and mobile numbers only — **toll-free numbers are NOT eligible**
+- Must be Twilio-owned (not ported-in numbers pending transfer)
+- Calls must originate via Programmable Voice (API or TwiML) — **SIP Trunking calls are not branded**
+- Each number can only belong to one Branded Calling trust product at a time
+
+**Display standards:**
+
+| Asset | Basic | Enhanced |
+|-------|-------|----------|
+| **Display name** | Business name, ~32 char carrier limit, must match Trust Hub profile | Same |
+| **Logo** | N/A | Square, min 300x300px, max 1MB, PNG/JPG, no text overlays |
+| **Call reason** | N/A | Free-text, ~40 char carrier display limit (e.g., "Appointment Reminder") |
+
+**Display name rules:**
+- Must match registered business name or documented trade name/DBA
+- No phone numbers, URLs, or special characters
+- Misleading names are rejected during review
+
+**Call reason guidelines (Enhanced only):**
+- Must accurately describe the call purpose
+- Cannot be generic ("Important Call") or misleading
+- Set per trust product — cannot be changed per-call
+- Keep under 40 characters for consistent carrier display
+
+**Carrier support:**
+- T-Mobile: Basic + Enhanced (native)
+- AT&T, Verizon: Voice Integrity spam remediation; Branded Calling display expanding
+- Apple/iOS: Enhanced only, limited support
+
+**CNAM** (traditional caller ID): 15-character limit, text-only, works on landlines, propagates in 24-48 hours, no approval process needed.
 
 ---
 
@@ -138,7 +196,7 @@ If making outbound voice calls, these programs improve answer rates:
 ### Voice Trust
 - **Cannot guarantee call delivery** — Carrier spam filters operate independently. Even Level A + Branded Calling + Voice Integrity can still be filtered.
 - **Cannot brand inbound calls** — Branded Calling applies to outbound calls only.
-- **Cannot use trust products outside the US** — STIR/SHAKEN, Voice Integrity, and Branded Calling are currently US-only.
+- **Cannot use Voice Integrity or Branded Calling outside the US** — Voice Integrity and Branded Calling are currently US-only. STIR/SHAKEN is available in the US and Canada (CRTC-mandated since Nov 2021).
 - **Cannot bypass manual approval** — Trust Hub vetting involves human review (1-3 business days for profiles, 2-6 weeks for Branded Calling).
 - **Cannot preserve attestation through `<Dial>`** — CallToken forwarding requires the Calls API or Conference Participants API.
 - **Cannot use Branded Calling with SIP Trunking** — Calls must originate via Programmable Voice.
