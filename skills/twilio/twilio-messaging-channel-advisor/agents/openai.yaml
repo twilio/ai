@@ -1,0 +1,10 @@
+interface:
+  display_name: "Messaging Channel Advisor"
+  short_description: "Planning skill for picking the right Twilio messaging channel — SMS, MMS, RCS, or WhatsApp — based on use case, geography, cost, and brand requirements."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "Which Twilio messaging channel should I use for my use case?"
+
+policy:
+  allow_implicit_invocation: true

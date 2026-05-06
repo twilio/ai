@@ -1,0 +1,10 @@
+interface:
+  display_name: "Email Deliverability Advisor"
+  short_description: "Deliverability advisor for the Twilio Email API (comms.twilio.com). Use when the developer mentions Twilio Email specifically, not SendGrid."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "Why are my Twilio Email messages not being delivered?"
+
+policy:
+  allow_implicit_invocation: true

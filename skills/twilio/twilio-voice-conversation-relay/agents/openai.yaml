@@ -1,0 +1,10 @@
+interface:
+  display_name: "ConversationRelay"
+  short_description: "Build AI-powered voice agents using Twilio ConversationRelay. Covers real-time ASR, TTS, WebSocket streaming, LLM integration, and voice provider configuration."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build an AI voice agent with real-time speech on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

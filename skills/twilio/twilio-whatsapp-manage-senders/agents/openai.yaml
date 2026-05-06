@@ -1,0 +1,10 @@
+interface:
+  display_name: "WhatsApp Senders"
+  short_description: "Create, configure, and manage WhatsApp Business senders via Twilio's Channels Senders API. Covers programmatic registration, profiles, webhooks, and ISV flows."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I register and manage WhatsApp Business senders on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,10 @@
+interface:
+  display_name: "Debugging & Observability"
+  short_description: "Debug Twilio integrations and set up production observability. Covers Console Debugger, Monitor Alerts, Event Streams, status callbacks, and common error codes."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "Why is my Twilio integration not working and how do I debug it?"
+
+policy:
+  allow_implicit_invocation: true

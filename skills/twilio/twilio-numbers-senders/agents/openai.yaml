@@ -1,0 +1,10 @@
+interface:
+  display_name: "Numbers & Senders"
+  short_description: "Choose the right Twilio number type before building. Covers local, toll-free, short code, alphanumeric sender IDs, WhatsApp senders, RCS agents, and regulatory bundles."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "Which Twilio phone number type should I use for my use case?"
+
+policy:
+  allow_implicit_invocation: true

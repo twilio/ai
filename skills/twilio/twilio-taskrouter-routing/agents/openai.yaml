@@ -1,0 +1,10 @@
+interface:
+  display_name: "TaskRouter"
+  short_description: "Route tasks to agents using Twilio TaskRouter. Covers Workers, Task Queues, Workflows, Reservations, skills-based routing, and common gotchas."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I route customer calls and tasks to the right agents with Twilio TaskRouter?"
+
+policy:
+  allow_implicit_invocation: true

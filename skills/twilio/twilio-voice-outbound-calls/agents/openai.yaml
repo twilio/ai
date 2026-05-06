@@ -1,0 +1,10 @@
+interface:
+  display_name: "Voice Outbound Calls"
+  short_description: "Make outbound phone calls via Twilio's Programmable Voice API. Covers calls.create(), answering machine detection, conference bridging, recording, and SIP Trunking."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I make outbound phone calls programmatically with Twilio?"
+
+policy:
+  allow_implicit_invocation: true

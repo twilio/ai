@@ -1,0 +1,10 @@
+interface:
+  display_name: "Enterprise Knowledge"
+  short_description: "Add knowledge retrieval to AI agents using Twilio's Enterprise Knowledge product. Covers FAQs, support policies, and searchable document repositories for AI agents."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I add a knowledge base to my AI agent on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

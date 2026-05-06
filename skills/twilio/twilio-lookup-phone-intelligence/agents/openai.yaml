@@ -1,0 +1,10 @@
+interface:
+  display_name: "Lookup & Phone Intelligence"
+  short_description: "Look up phone number intelligence via Twilio Lookup v2. Covers number validation, line type detection, SIM swap detection, caller name, and SMS pumping risk scoring."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I look up phone number intelligence with Twilio?"
+
+policy:
+  allow_implicit_invocation: true

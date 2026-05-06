@@ -1,0 +1,10 @@
+interface:
+  display_name: "SendGrid Engagement Quality"
+  short_description: "Monitor email program health with SendGrid Engagement Quality (SEQ) scores. Covers the 5 scoring metrics and interpreting scores for deliverability improvement."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I check and improve my SendGrid sender reputation?"
+
+policy:
+  allow_implicit_invocation: true

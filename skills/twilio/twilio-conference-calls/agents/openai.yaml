@@ -1,0 +1,10 @@
+interface:
+  display_name: "Conference Calls"
+  short_description: "Build multi-party calls using Twilio Conference. Covers warm transfer, cold transfer, coaching (whisper), hold vs mute, and supervisor barge."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build multi-party conference calls on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,10 @@
+interface:
+  display_name: "SMS & MMS Reference"
+  short_description: "SMS and MMS deep-dive reference. Covers error codes, message filtering troubleshooting, MMS media support, and SMS pumping indicators."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "Why are my Twilio SMS messages not being delivered?"
+
+policy:
+  allow_implicit_invocation: true

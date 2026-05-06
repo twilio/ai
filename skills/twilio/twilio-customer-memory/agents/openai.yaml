@@ -1,0 +1,10 @@
+interface:
+  display_name: "Customer Memory"
+  short_description: "Store and retrieve customer context using Twilio Conversation Memory. Covers Memory Store, profile management, traits, observations, and semantic Recall."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I give my AI agent persistent memory of customer interactions?"
+
+policy:
+  allow_implicit_invocation: true

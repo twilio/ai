@@ -1,0 +1,10 @@
+interface:
+  display_name: "SendGrid Webhooks"
+  short_description: "Track email delivery and engagement via SendGrid Event Webhooks. Covers all 11 event types, ECDSA signature verification, and batched event processing."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I track email delivery and engagement events with SendGrid?"
+
+policy:
+  allow_implicit_invocation: true

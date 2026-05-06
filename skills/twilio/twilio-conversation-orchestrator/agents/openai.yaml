@@ -1,0 +1,10 @@
+interface:
+  display_name: "Conversation Orchestrator"
+  short_description: "Configure automatic conversation capture and routing with Twilio Conversation Orchestrator. Covers capture rules, grouping types, Memory Store linkage, and conversation lifecycle."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I automatically capture and route conversations across channels on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

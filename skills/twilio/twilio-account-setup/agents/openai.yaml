@@ -1,0 +1,10 @@
+interface:
+  display_name: "Twilio Account Setup"
+  short_description: "Create and configure a Twilio account from scratch. Covers trial signup, credentials, buying a phone number, SDK installation, and subaccount management."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I create and configure a new Twilio account?"
+
+policy:
+  allow_implicit_invocation: true

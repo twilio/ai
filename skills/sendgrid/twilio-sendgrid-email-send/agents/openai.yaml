@@ -1,0 +1,10 @@
+interface:
+  display_name: "SendGrid Email Send"
+  short_description: "Send transactional and bulk email via the SendGrid v3 Mail Send API. Covers single sends, personalized batch sends, dynamic templates, scheduled sends, and sandbox mode."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I send transactional email with SendGrid?"
+
+policy:
+  allow_implicit_invocation: true

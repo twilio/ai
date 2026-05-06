@@ -1,0 +1,10 @@
+interface:
+  display_name: "Send Message"
+  short_description: "Send messages via Twilio's Programmable Messaging API across SMS, MMS, RCS, and WhatsApp. Covers text, media, rich content, templates, and status callbacks."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I send SMS, MMS, RCS, and WhatsApp messages with Twilio?"
+
+policy:
+  allow_implicit_invocation: true

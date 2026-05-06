@@ -1,0 +1,10 @@
+interface:
+  display_name: "Twilio CLI"
+  short_description: "Twilio CLI reference for managing Twilio resources from the terminal. Covers installation, credential profiles, phone number provisioning, webhooks, and serverless deployment."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I manage my Twilio resources from the command line?"
+
+policy:
+  allow_implicit_invocation: true

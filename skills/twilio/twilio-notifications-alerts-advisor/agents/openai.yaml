@@ -1,0 +1,10 @@
+interface:
+  display_name: "Notifications & Alerts Advisor"
+  short_description: "Planning skill for transactional notifications and alerts. Recommends the right Twilio architecture for urgency, channel selection, delivery confirmation, and fallback patterns."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build a reliable notifications and alerts system on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,10 @@
+interface:
+  display_name: "WhatsApp Messaging"
+  short_description: "WhatsApp messaging deep-dive. Covers the 24-hour service window, sandbox setup, template approval, production sender requirements, and WhatsApp-specific errors."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I send WhatsApp messages on Twilio?"
+
+policy:
+  allow_implicit_invocation: true
