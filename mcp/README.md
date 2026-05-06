@@ -9,7 +9,7 @@ The Twilio MCP (Model Context Protocol) server provides AI coding agents with se
 ## Endpoint
 
 ```
-https://mcp.twilio.com/docs/mcp
+https://mcp.twilio.com/docs
 ```
 
 Transport: Streamable HTTP (no authentication required)
@@ -35,7 +35,7 @@ Transport: Streamable HTTP (no authentication required)
 /plugin install twilio-developer-kit@twilio
 
 # Option 2: Add MCP server directly
-claude mcp add twilio-docs -- npx -y @anthropic-ai/mcp-remote https://mcp.twilio.com/docs/mcp
+claude mcp add twilio-docs -- npx -y @anthropic-ai/mcp-remote https://mcp.twilio.com/docs
 ```
 
 ### Cursor
@@ -45,7 +45,7 @@ Add in **Cursor Settings > MCP**:
 ```json
 {
   "twilio-docs": {
-    "url": "https://mcp.twilio.com/docs/mcp"
+    "url": "https://mcp.twilio.com/docs"
   }
 }
 ```
@@ -53,7 +53,7 @@ Add in **Cursor Settings > MCP**:
 ### Codex (OpenAI)
 
 ```bash
-codex mcp add twilio-docs --url https://mcp.twilio.com/docs/mcp
+codex mcp add twilio-docs --url https://mcp.twilio.com/docs
 ```
 
 ### Other MCP-compatible tools
@@ -61,7 +61,7 @@ codex mcp add twilio-docs --url https://mcp.twilio.com/docs/mcp
 Any tool that supports MCP streamable HTTP transport can connect directly to:
 
 ```
-https://mcp.twilio.com/docs/mcp
+https://mcp.twilio.com/docs
 ```
 
 No API key or authentication is required.
@@ -93,12 +93,12 @@ If you are submitting Twilio MCP to an MCP registry or marketplace, use the foll
 | Name | `twilio` |
 | Display Name | Twilio MCP |
 | Description | Search Twilio documentation and API specifications |
-| Endpoint | `https://mcp.twilio.com/docs/mcp` |
+| Endpoint | `https://mcp.twilio.com/docs` |
 | Transport | Streamable HTTP |
 | Authentication | None |
 | Tools | `twilio__search`, `twilio__retrieve` |
 | Repository | `https://github.com/twilio/ai` |
-| Documentation | `https://mcp.twilio.com/docs/mcp` |
+| Documentation | `https://mcp.twilio.com/docs` |
 
 ---
 
