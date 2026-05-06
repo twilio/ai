@@ -1,3 +1,14 @@
+---
+name: twilio-agent-connect
+description: >
+  Connect third-party AI agents (OpenAI, Bedrock, LangChain, Microsoft Foundry)
+  to Twilio's communication channels using the Twilio Agent Connect SDK. Covers
+  identity resolution, memory and context management via Conversation Memory,
+  conversation orchestration via Conversation Orchestrator, multi-channel
+  handling (Voice, SMS, RCS, WhatsApp, Chat), and AI-to-human escalation.
+  Use this skill when integrating an existing LLM agent with Twilio services.
+---
+
 # Twilio Agent Connect
 
 ## Overview
