@@ -1,0 +1,10 @@
+interface:
+  display_name: "Messaging Webhooks"
+  short_description: "Receive inbound messages and track outbound delivery status via Twilio webhooks across SMS, MMS, WhatsApp, and RCS. Covers TwiML replies and signature validation."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I receive inbound messages and track delivery status with Twilio?"
+
+policy:
+  allow_implicit_invocation: true

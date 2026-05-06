@@ -1,0 +1,10 @@
+interface:
+  display_name: "Security & API Auth"
+  short_description: "Choose the right Twilio authentication method. Covers Auth Token, API Keys, OAuth2 client credentials, Access Tokens, and test credentials."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "What's the right way to authenticate Twilio API calls securely?"
+
+policy:
+  allow_implicit_invocation: true

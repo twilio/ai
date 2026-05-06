@@ -1,0 +1,10 @@
+interface:
+  display_name: "Compliance Traffic Rules"
+  short_description: "Rules you must follow for Twilio messaging and voice traffic. Covers TCPA, GDPR, PCI DSS, HIPAA, FDCPA, CAN-SPAM, WhatsApp policies, and consent management."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "What compliance rules apply to Twilio messaging and voice?"
+
+policy:
+  allow_implicit_invocation: true

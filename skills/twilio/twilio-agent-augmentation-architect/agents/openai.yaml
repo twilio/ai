@@ -1,0 +1,10 @@
+interface:
+  display_name: "Agent Augmentation Architect"
+  short_description: "Planning skill for augmenting human agents with real-time AI intelligence. Recommends the right Conversation Intelligence + Memory + TaskRouter architecture."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I add real-time AI coaching and intelligence to my contact center?"
+
+policy:
+  allow_implicit_invocation: true

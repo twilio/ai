@@ -1,0 +1,10 @@
+interface:
+  display_name: "SendGrid Inbound Parse"
+  short_description: "Receive inbound email via SendGrid Inbound Parse webhook. Covers MX record setup, parsed vs raw mode, handling attachments, and common pitfalls."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I receive and process inbound emails with SendGrid?"
+
+policy:
+  allow_implicit_invocation: true

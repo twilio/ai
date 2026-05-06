@@ -1,0 +1,10 @@
+interface:
+  display_name: "Call Recordings"
+  short_description: "Record Twilio voice calls correctly. Covers the Record verb vs Dial record distinction, dual-channel for QA, mid-call pause for PCI, and Conference recording."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I record voice calls on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

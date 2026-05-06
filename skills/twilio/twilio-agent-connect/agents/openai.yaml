@@ -1,0 +1,10 @@
+interface:
+  display_name: "Agent Connect"
+  short_description: "Connect third-party AI agents to Twilio's communication channels. Covers identity resolution, memory management, conversation orchestration, and AI-to-human escalation."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I connect my AI agent to Twilio channels?"
+
+policy:
+  allow_implicit_invocation: true

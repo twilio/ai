@@ -1,0 +1,10 @@
+interface:
+  display_name: "SMS ISV Setup"
+  short_description: "Best practices for ISVs building SMS into multi-tenant SaaS platforms. Covers A2P compliance onboarding, subaccount architecture, sender management, and billing patterns."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build SMS features into a multi-tenant SaaS platform on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

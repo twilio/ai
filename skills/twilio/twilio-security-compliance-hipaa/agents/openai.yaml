@@ -1,0 +1,10 @@
+interface:
+  display_name: "HIPAA Compliance"
+  short_description: "Configure Twilio accounts for HIPAA compliance. Covers BAA requirements, HIPAA Project designation, eligible services, message redaction, and per-product requirements."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I configure my Twilio account to be HIPAA compliant?"
+
+policy:
+  allow_implicit_invocation: true

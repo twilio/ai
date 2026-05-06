@@ -1,0 +1,10 @@
+interface:
+  display_name: "Twilio Voice Markup Language"
+  short_description: "Build voice call logic using TwiML. Covers core verbs (Say, Play, Gather, Dial, Record, Conference), SDK generation, and a complete IVR example."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build IVR and call flow logic with Twilio?"
+
+policy:
+  allow_implicit_invocation: true

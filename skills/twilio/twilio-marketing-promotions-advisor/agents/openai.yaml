@@ -1,0 +1,10 @@
+interface:
+  display_name: "Marketing & Promotions Advisor"
+  short_description: "Planning skill for marketing and promotional messaging. Recommends the right Twilio architecture for SMS campaigns, channel selection, and compliance."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build a compliant marketing SMS campaign on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

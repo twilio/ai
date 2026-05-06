@@ -1,0 +1,10 @@
+interface:
+  display_name: "Organizations Setup"
+  short_description: "Set up and manage Twilio Organizations for centralized account governance. Covers the Organization > Account hierarchy, SSO enforcement, SCIM provisioning, and roles."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I set up centralized account governance and SSO for Twilio?"
+
+policy:
+  allow_implicit_invocation: true

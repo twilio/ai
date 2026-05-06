@@ -1,0 +1,10 @@
+interface:
+  display_name: "Conversation Intelligence"
+  short_description: "Twilio Conversation Intelligence development guide. Covers real-time and post-call analysis, language operators, sentiment, and agent assist."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I add real-time sentiment analysis and AI insights to conversations?"
+
+policy:
+  allow_implicit_invocation: true

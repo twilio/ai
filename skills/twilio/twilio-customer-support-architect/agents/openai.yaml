@@ -1,0 +1,10 @@
+interface:
+  display_name: "Customer Support Architect"
+  short_description: "Planning skill for building customer service and support systems. Recommends the right Twilio architecture across self-service, AI agents, and contact center."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build a customer support system on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

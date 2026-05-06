@@ -1,0 +1,10 @@
+interface:
+  display_name: "Compliance Onboarding"
+  short_description: "Registrations required before Twilio traffic works. Covers A2P 10DLC, toll-free verification, WhatsApp WABA, RCS, short code, and voice trust programs."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "What do I need to register before sending SMS or making calls with Twilio?"
+
+policy:
+  allow_implicit_invocation: true

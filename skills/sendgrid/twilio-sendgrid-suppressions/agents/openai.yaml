@@ -1,0 +1,10 @@
+interface:
+  display_name: "SendGrid Suppressions"
+  short_description: "Manage SendGrid email suppressions: bounces, blocks, spam reports, invalid emails, and unsubscribe groups."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I manage email bounces and unsubscribes in SendGrid?"
+
+policy:
+  allow_implicit_invocation: true

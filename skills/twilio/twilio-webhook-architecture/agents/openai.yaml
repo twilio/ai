@@ -1,0 +1,10 @@
+interface:
+  display_name: "Webhook Architecture"
+  short_description: "Design, secure, and operate Twilio webhook endpoints. Covers event handling, status callbacks, signature validation, retry tuning, and production hardening."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I design and secure Twilio webhook endpoints for production?"
+
+policy:
+  allow_implicit_invocation: true

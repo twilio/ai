@@ -1,0 +1,10 @@
+interface:
+  display_name: "IAM & Auth Setup"
+  short_description: "Set up and manage Twilio authentication credentials: Auth Tokens, API keys, Access Tokens for client-side SDKs, and credential rotation."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I set up and manage Twilio API keys securely?"
+
+policy:
+  allow_implicit_invocation: true

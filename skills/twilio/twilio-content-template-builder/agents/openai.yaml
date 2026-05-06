@@ -1,0 +1,10 @@
+interface:
+  display_name: "Content Template Builder"
+  short_description: "Create and send message templates using Twilio's Content API. Covers WhatsApp, SMS, RCS, and MMS templates, variable usage, and Meta approval."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I create and send WhatsApp and RCS message templates on Twilio?"
+
+policy:
+  allow_implicit_invocation: true

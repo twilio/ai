@@ -1,0 +1,10 @@
+interface:
+  display_name: "Messaging Services"
+  short_description: "Create and configure Twilio Messaging Services for production messaging. Covers sender pools, geo-match, sticky sender, scheduling, and SMS pumping protection."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I set up production-ready messaging infrastructure on Twilio?"
+
+policy:
+  allow_implicit_invocation: true
