@@ -1,6 +1,30 @@
 # Twilio for AI
 
-Official Twilio Skills for AI coding agents. Works across Claude Code, Cursor, Codex, and any tool supporting the [Agent Skills](https://agentskills.io) standard.
+Official Twilio Skills and MCP for AI coding agents. Works across Claude Code, Cursor, Codex, and any tool supporting the [Agent Skills](https://agentskills.io) standard.
+
+> **Public Beta:** Twilio MCP and Twilio Skills are currently available as Public Beta products, and the information contained in this repository is subject to change. This means that some features are not yet implemented and others may be changed before the products are declared as Generally Available. Public Beta products are not covered by the Twilio Support Terms or Twilio Service Level Agreement.
+
+---
+
+## Twilio MCP
+
+The Twilio MCP server provides search over Twilio documentation and API specifications. It exposes two tools:
+
+| Tool | Description |
+|------|-------------|
+| `twilio__search` | Search Twilio docs and API operations by natural language query |
+| `twilio__retrieve` | Fetch full parameter schemas for specific API operations |
+
+**Endpoint:** `https://mcp.twilio.com/docs`
+
+See [`mcp/README.md`](mcp/README.md) for setup instructions across all supported IDEs.
+Documentation: https://www.twilio.com/docs/ai/mcp
+
+## Feedback
+
+- Questions and feedback: questions-mcp@twilio.com
+- Issues: [GitHub Issues](https://github.com/twilio/ai/issues)
+
 
 ---
 
@@ -25,12 +49,14 @@ Skills are structured packages of procedural knowledge for AI coding agents. The
 
 Covers: SMS, MMS, WhatsApp, RCS, Voice, Verify, SendGrid, Conversations, Messaging Services, Compliance (A2P 10DLC, Toll-Free, STIR/SHAKEN), and more.
 
-### Install Twilio Skills
+Documentation: https://www.twilio.com/docs/ai/skills
+
+### Install
 
 #### Claude Code
 
 ```bash
-# Add the Twilio marketplace and install the plugin
+# Add the Twilio marketplace and install the plugin (includes Skills + MCP)
 /plugin marketplace add twilio/ai
 /plugin install twilio-developer-kit@twilio
 ```
@@ -51,23 +77,23 @@ git clone https://github.com/twilio/ai.git .twilio-ai
 cp -r .twilio-ai/skills/ .agents/skills/
 ```
 
-Type `/skills` in Cursor's Agent mode to see available Twilio skills.
+Add the MCP server in Cursor Settings > MCP:
+
+```json
+{
+  "twilio-docs": {
+    "url": "https://mcp.twilio.com/docs"
+  }
+}
+```
 
 #### Codex (OpenAI)
 
-Skills are file-based. Place them in any of these locations:
-
 ```bash
-# Project-level (committed to your repo)
-.agents/skills/<skill-name>/SKILL.md
+# Add MCP server
+codex mcp add twilio-docs --url https://mcp.twilio.com/docs
 
-# User-level (available across all projects)
-~/.agents/skills/<skill-name>/SKILL.md
-```
-
-Clone and copy:
-
-```bash
+# Add Skills (user-level, available across all projects)
 git clone https://github.com/twilio/ai.git
 cp -r ai/skills/ ~/.agents/skills/
 ```
@@ -75,6 +101,8 @@ cp -r ai/skills/ ~/.agents/skills/
 #### Other tools (GitHub Copilot, Gemini CLI, JetBrains, etc.)
 
 Twilio Skills use the open [Agent Skills](https://agentskills.io) standard (`SKILL.md` format). Any tool supporting this standard can load them from the `skills/` directory in this repo.
+
+For MCP, use the streamable HTTP endpoint: `https://mcp.twilio.com/docs`
 
 ---
 
@@ -94,6 +122,10 @@ Your agent should provide guidance on Messaging Services, A2P compliance, error 
 - Issues: [GitHub Issues](https://github.com/twilio/ai/issues)
 
 ---
+
+## Disclaimer
+
+Twilio MCP and Twilio Skills are currently available as Public Beta products, and the information contained in this repository is subject to change. This means that some features are not yet implemented and others may be changed before the products are declared as Generally Available. Public Beta products are not covered by the Twilio Support Terms or Twilio Service Level Agreement.
 
 ## License
 
