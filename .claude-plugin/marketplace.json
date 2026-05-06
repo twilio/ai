@@ -18,12 +18,19 @@
         "sms",
         "voice",
         "whatsapp",
+        "rcs",
         "messaging",
         "verify",
+        "sendgrid",
+        "email",
         "compliance",
         "conversation-relay",
-        "sendgrid",
-        "email"
+        "conversation-memory",
+        "conversation-intelligence",
+        "conversation-orchestrator",
+        "agent-connect",
+        "enterprise-knowledge",
+        "apple-messages-for-business"
       ],
       "mcp": {
         "twilio-docs": {
