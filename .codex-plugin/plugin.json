@@ -24,11 +24,7 @@
     "api",
     "segment"
   ],
-  "skills": "./skills/",
-  "mcp": {
-    "twilio-docs": {
-      "url": "https://mcp.twilio.com/docs"
-    }
+  "skills": "./skills/"
   },
   "interface": {
     "displayName": "Twilio Developer Kit",
