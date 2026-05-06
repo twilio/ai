@@ -26,10 +26,5 @@
     "segment"
   ],
   "skills": ["./skills/twilio/", "./skills/sendgrid/"],
-  "mcp": {
-    "twilio-docs": {
-      "url": "https://mcp.twilio.com/docs"
-    }
-  },
   "logo": "./assets/logo.svg"
 }
