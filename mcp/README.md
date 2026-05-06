@@ -4,7 +4,11 @@ The Twilio MCP (Model Context Protocol) server provides AI coding agents with se
 
 > **Public Beta:** Twilio MCP is currently available as a Public Beta product, and the information contained here is subject to change. Some features are not yet implemented and others may be changed before the product is declared as Generally Available. Public Beta products are not covered by the Twilio Support Terms or Twilio Service Level Agreement.
 
-Documentation: `https://docs.twilio.com/ai/mcp` 
+---
+Documentation: 
+```
+https://docs.twilio.com/ai/mcp
+```
 ---
 
 ## Endpoint
