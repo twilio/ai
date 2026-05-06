@@ -8,7 +8,7 @@ Official Twilio Skills and MCP for AI coding agents. Works across Claude Code, C
 
 ## Twilio MCP
 
-The Twilio MCP server provides semantic search over Twilio documentation and API specifications. It exposes two tools:
+The Twilio MCP server provides search over Twilio documentation and API specifications. It exposes two tools:
 
 | Tool | Description |
 |------|-------------|
@@ -18,6 +18,13 @@ The Twilio MCP server provides semantic search over Twilio documentation and API
 **Endpoint:** `https://mcp.twilio.com/docs`
 
 See [`mcp/README.md`](mcp/README.md) for setup instructions across all supported IDEs.
+Documentation: https://www.twilio.com/docs/ai/mcp
+
+## Feedback
+
+- Questions and feedback: questions-mcp@twilio.com
+- Issues: [GitHub Issues](https://github.com/twilio/ai/issues)
+
 
 ---
 
@@ -41,6 +48,8 @@ Skills are structured packages of procedural knowledge for AI coding agents. The
 | **Guardrail** | Operational patterns preventing failures | `twilio-security-hardening`, `twilio-reliability-patterns`, `twilio-compliance-traffic` |
 
 Covers: SMS, MMS, WhatsApp, RCS, Voice, Verify, SendGrid, Conversations, Messaging Services, Compliance (A2P 10DLC, Toll-Free, STIR/SHAKEN), and more.
+
+Documentation: https://www.twilio.com/docs/ai/skills
 
 ### Install
 
