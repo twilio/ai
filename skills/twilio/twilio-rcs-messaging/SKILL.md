@@ -60,7 +60,10 @@ Create your RCS Sender in Console with:
 - Privacy policy URL — must be publicly accessible
 - Terms of Service URL — must be publicly accessible
 - Both must cover SMS/RCS messaging, data handling, opt-out process
+- The privacy policy **must state** that information will be shared with third parties for the purpose of transmitting RCS messages
 - Some countries require local-language versions
+
+For US-specific compliance details, see the [RCS Compliance Onboarding Guide](https://help.twilio.com/articles/49174994355355-RCS-Compliance-Onboarding-Guide).
 
 ### Part 3: Eligibility & Acceptable Use
 
@@ -169,6 +172,14 @@ When a recipient's device doesn't support RCS Business Messaging, Twilio automat
 - Without Twilio's fallback: the message simply fails to deliver (no automatic retry to SMS)
 
 ---
+
+## Multiple RCS Senders
+
+A single brand can have multiple RCS senders, but each must have a **distinct use case** (e.g., one for transactional, one for marketing). The use case must be clearly different — carriers reject duplicate-purpose senders for the same brand.
+
+- Each sender has its own display name, logo, and campaign details
+- All senders go through independent carrier approval
+- Each sender can only belong to one Messaging Service
 
 ## ISV Path
 

@@ -46,7 +46,7 @@ Trigger on any of these signals:
 2. **Which channels?** (Reference Channel Mix Matrix — Marketing column)
    - **SMS/MMS** → Highest open rates (98%), immediate. Best for time-sensitive offers. US requires A2P 10DLC compliance.
    - **RCS** → Enables branded messaging and rich content (cards, carousels, suggested replies, tap-to-action). Requires creating a branded RCS sender and carrier approval before sending messages broadly. Can send to allowlisted test devices. Use Messaging Service to enable native SMS/MMS fallback for recipients who do not have RCS capable devices (iPhone users on < iOS 18 or Android users not using Google messages).
-   - **Email** → Highest volume capacity, lowest per-message cost. Best for rich content (images, HTML). Use `twilio-sendgrid-email-send` (SendGrid API key, SG.-prefix).
+   - **Email** → Highest volume capacity, lowest per-message cost. Best for rich content (images, HTML). Use `twilio-email-send` (Twilio Account SID + Auth Token, comms.twilio.com) or `twilio-sendgrid-email-send` (SendGrid API key, SG.-prefix).
    - **WhatsApp** → Dominant internationally (India, Brazil, Europe). Requires pre-approved templates for outbound. 24-hour service window for free-form replies.
    - **Multi-channel** → Most campaigns should use 2+ channels. Email for initial reach, SMS for urgency, WhatsApp for international.
 
@@ -79,7 +79,7 @@ Trigger on any of these signals:
 - SMS: Always use a Messaging Service, even for simple sends. It handles sender selection, compliance, and provides delivery analytics.
 - Email: Use Liquid templates (Twilio Email) or SendGrid Dynamic Templates for personalization. Don't hard-code HTML.
 - Track every message: Include StatusCallback URL on every send.
-**Skills to install:** `twilio-sms-send-message` and/or `twilio-sendgrid-email-send` (SendGrid API key, SG.-prefix), `twilio-messaging-services`
+**Skills to install:** `twilio-sms-send-message` and/or `twilio-email-send` (Account SID + Auth Token → comms.twilio.com) or `twilio-sendgrid-email-send` (SendGrid API key, SG.-prefix), `twilio-messaging-services`
 
 ### Level 2: Multi-Channel Campaign
 **Developer says:** "I want to reach customers on their preferred channel."
@@ -163,7 +163,7 @@ Recommended Architecture: [Level 1-3 description]
 
 Product Skills to Install:
 - twilio-sms-send-message (if SMS channel)
-- twilio-sendgrid-email-send (if email channel)
+- twilio-email-send (if email channel, Twilio creds — Account SID + Auth Token) or twilio-sendgrid-email-send (if SendGrid API key, SG.-prefix)
 - twilio-whatsapp-send-message (if WhatsApp channel)
 - twilio-whatsapp-manage-senders (if WhatsApp production)
 - twilio-messaging-services (always for SMS at scale)

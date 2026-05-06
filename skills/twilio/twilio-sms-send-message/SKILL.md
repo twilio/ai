@@ -3,7 +3,7 @@ name: twilio-sms-send-message
 description: >
   SMS and MMS deep-dive reference. Covers SMS-specific error codes,
   message filtering troubleshooting ("Messages Being Filtered or Blocked?"
-  diagnostic checklist), MMS media support (US/CA only), and SMS pumping
+  diagnostic checklist), MMS media support (US/CA/AU only), and SMS pumping
   indicators. For sending SMS, use twilio-send-message instead. Use this
   skill only when debugging SMS delivery issues or needing SMS-specific
   details not in the consolidated send skill.
@@ -15,7 +15,7 @@ description: >
 
 | When to use SMS | When to consider alternatives |
 |----------------|------------------------------|
-| Reach any phone number globally | Need rich media outside US/CA → WhatsApp |
+| Reach any phone number globally | Need rich media outside US/CA/AU → WhatsApp |
 | No app install required | Opted-in audience prefers chat apps → WhatsApp |
 | Time-sensitive alerts (OTP, outage) | Marketing campaigns → `twilio-marketing-promotions-advisor` |
 | Regulatory/compliance requires SMS | Cost-sensitive high-volume → WhatsApp (lower per-msg cost in many markets) |
@@ -192,7 +192,7 @@ For delivery event tracking, set up StatusCallbacks or use `twilio-debugging-obs
 
 - **Cannot send without E.164 format** — Both `from` and `to` must be `+` followed by country code and number
 - **Cannot send to unverified numbers on trial accounts** — Upgrade to paid or verify recipient numbers first
-- **Cannot send MMS outside US and Canada** — MMS is only supported on US/CA long codes; for international rich media use WhatsApp
+- **Cannot send MMS outside US, Canada, and Australia** — MMS is only supported on US/CA/AU numbers; for international rich media use WhatsApp
 - **Cannot exceed 1,600 characters per message** — Longer messages are automatically split into segments (each billed separately)
 - **Cannot prevent SMS pumping without a Messaging Service** — Enable SMS pumping protection via Messaging Services to prevent artificial traffic inflation. See `twilio-messaging-services`
 

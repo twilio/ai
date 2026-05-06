@@ -258,6 +258,68 @@ dial.conference("Daily Standup", {
 });
 ```
 
+### Pay — PCI-compliant payment collection
+
+> **Critical warnings:**
+> - Pay Connectors are **Console-only** — there is no REST API to create or manage connectors. Set up in Console > Voice > Pay Connectors before coding.
+> - **PCI Mode is IRREVERSIBLE** once enabled on an account. Use a dedicated sub-account for payment calls.
+
+**Python**
+```python
+response = VoiceResponse()
+response.say("We'll now collect your payment.")
+pay = Pay(
+    payment_connector="stripe_connector",  # Name from Console setup
+    charge_amount="49.99",
+    currency="usd",
+    action="/payment-complete",
+    status_callback="/payment-status"
+)
+response.append(pay)
+```
+
+**Node.js**
+```node
+const response = new VoiceResponse();
+response.say("We'll now collect your payment.");
+response.pay({
+    paymentConnector: "stripe_connector",
+    chargeAmount: "49.99",
+    currency: "usd",
+    action: "/payment-complete",
+    statusCallback: "/payment-status",
+});
+```
+
+Supported processors: Stripe, Braintree, CardConnect. Card data routes directly to the processor — never touches your server.
+
+---
+
+## Production Deployment
+
+### Webhook Hosting
+
+For production, do NOT use ngrok. Deploy your TwiML server with HTTPS:
+
+- **Requirement**: Public HTTPS URL, responds within 15 seconds, returns `Content-Type: text/xml`
+- **Options**: Cloud Run, AWS Lambda + API Gateway, Railway, Render — any service with TLS and auto-scaling
+- **Fallback URL**: Configure in Console (Phone Numbers > Active Numbers > select number) for when your primary server is unreachable
+
+### State Between TwiML Requests
+
+Each webhook request is stateless. To maintain conversation state across interactions:
+
+- **URL query params**: Pass state in `action` URLs — `/next-step?language=es&dept=sales`
+- **Session store**: Use Redis or a database keyed by `CallSid`
+- **Do NOT use in-memory state** — your server may scale to multiple instances
+
+### Monitoring
+
+- **Status callbacks**: Track call lifecycle events (`statusCallback` on the call or number config)
+- **Voice Insights**: Automatic quality metrics per call (Console > Monitor > Insights)
+- **Debugger**: Console > Monitor > Errors for TwiML parsing failures and webhook timeouts
+- **Fallback URLs**: Always configure a fallback TwiML URL — serves a graceful message if your primary endpoint fails
+
 ---
 
 ## Webhook Request Parameters
@@ -277,10 +339,13 @@ dial.conference("Daily Standup", {
 - **Cannot return TwiML without correct content type** — Must use `Content-Type: text/xml`
 - **Cannot exceed 15-second webhook response time** — Twilio times out and falls back
 - **Cannot exceed 4,096 characters in `<Say>` verb** — Split longer text across multiple `<Say>` elements
+- **Cannot create Pay Connectors via API** — Pay Connectors are Console-only (Console > Voice > Pay Connectors). No REST API exists for connector management.
+- **Cannot reverse PCI Mode** — Once enabled on an account, PCI Mode is permanent and account-wide. Use a dedicated sub-account for payment calls.
+- **Cannot use `<Record>` for two-party call recording** — `<Record>` captures the caller only (voicemail-style). For dual-channel recording of both parties, use `record=True` on `calls.create()` or the Recordings API.
 
 ---
 
 ## Next Steps
 
-- **Place outbound calls:** `twilio-voice-outbound-calls`
+- **Place outbound calls (AMD, conferencing):** `twilio-voice-outbound-calls`
 - **AI voice agents with real-time speech/LLM:** `twilio-voice-conversation-relay`

@@ -2,9 +2,10 @@
 name: twilio-voice-outbound-calls
 description: >
   Make outbound phone calls via Twilio's Programmable Voice REST API. Covers
-  initiating calls with TwiML instructions, inline TwiML, tracking call status,
-  and recording calls. Use this skill whenever an agent needs to place an
-  outbound voice call through Twilio.
+  the full voice platform: calls.create(), answering machine detection (AMD),
+  conference-based agent bridging, call recording, status tracking, and SIP
+  Trunking. Use this skill for outbound calls, sales dialers, or when asking
+  what voice APIs are available.
 ---
 
 ## Overview
@@ -12,6 +13,25 @@ description: >
 > **Agent safety:** Before placing an outbound call, always confirm the recipient number and intent with the user. Outbound calls are irreversible and may incur charges. For automated systems, implement TCPA compliance: obtain prior express consent, respect quiet hours (8 AM–9 PM recipient local time), and maintain a Do Not Call list.
 
 Every outbound call requires a `from` Twilio number, a `to` recipient, and TwiML instructions that define what happens when the call is answered — either as a webhook URL or inline.
+
+---
+
+## Voice Platform Capabilities
+
+Outbound calls go beyond basic `calls.create()`. Here's what you can build:
+
+| Capability | How | When to use |
+|-----------|-----|-------------|
+| **Basic outbound call** | `calls.create()` with TwiML or webhook URL | Any outbound call — see Quickstart below |
+| **Answering Machine Detection (AMD)** | `machineDetection` parameter on `calls.create()` | Sales dialers, call campaigns — filter voicemail from humans |
+| **Conference-based agent bridging** | `<Dial><Conference>` in TwiML | Connect agents to live prospects with whisper, barge, hold |
+| **SIP Trunking** | Elastic SIP Trunking | Bring your own carrier for outbound calls — cost reduction at scale |
+| **Call Recording** | `record=True` on `calls.create()` or `<Record>` verb | Compliance, QA, training |
+| **Voice Insights** | Automatic per-call metrics | Call quality monitoring — latency, jitter, packet loss, answer rates |
+| **AI Voice Agents** | ConversationRelay + LLM | Real-time speech recognition → LLM → TTS for conversational AI |
+
+For TwiML verbs (Say, Gather, Dial, Record, Conference, Pay), see `twilio-voice-twiml`.
+For AI voice agents, see `twilio-voice-conversation-relay`.
 
 ---
 
@@ -171,6 +191,78 @@ Recordings accessible at `https://api.twilio.com/2010-04-01/Accounts/{AccountSid
 
 ---
 
+## Answering Machine Detection (AMD)
+
+Detect whether a human or voicemail answers before connecting an agent or leaving a message. Two modes:
+
+| Mode | Behavior | Best for |
+|------|----------|----------|
+| `Enable` | Returns result immediately when human/machine first detected | **Sales dialers** — connect agent to humans ASAP |
+| `DetectMessageEnd` | Waits for voicemail greeting to finish (beep/silence) | **Leaving voicemail** — wait for beep, then play/record message |
+
+**Python — Sales dialer (connect agents to live answers only)**
+```python
+call = client.calls.create(
+    from_="+15017122661",
+    to="+15558675310",
+    url="https://yourapp.com/handle-answer",
+    machine_detection="Enable",  # Immediate detection — use for live-agent connect
+    async_amd=True,              # Non-blocking — call connects while AMD analyzes
+    async_amd_status_callback="https://yourapp.com/amd-result",
+    async_amd_status_callback_method="POST"
+)
+```
+
+**Node.js**
+```javascript
+const call = await client.calls.create({
+    from: "+15017122661",
+    to: "+15558675310",
+    url: "https://yourapp.com/handle-answer",
+    machineDetection: "Enable",
+    asyncAmd: true,
+    asyncAmdStatusCallback: "https://yourapp.com/amd-result",
+    asyncAmdStatusCallbackMethod: "POST",
+});
+```
+
+**AMD webhook delivers `AnsweredBy` parameter:**
+
+| Value | Meaning | Action |
+|-------|---------|--------|
+| `human` | Live person detected | Connect to agent |
+| `machine_start` | Machine detected, greeting still playing | Hang up or wait |
+| `machine_end_beep` | Voicemail beep heard | Leave message |
+| `machine_end_silence` | Silence after greeting | Leave message |
+| `fax` | Fax tone detected | Hang up |
+| `unknown` | Could not determine | Treat as human or retry |
+
+**Conference-based agent bridging** (production pattern for sales dialers):
+
+```python
+# In /handle-answer webhook — when AMD says "human":
+response = VoiceResponse()
+dial = response.dial()
+dial.conference(
+    f"Sales-{call_sid}",
+    start_conference_on_enter=False,  # Prospect waits for agent
+    end_conference_on_exit=True
+)
+
+# Separately, dial agent into same conference:
+client.calls.create(
+    from_="+15017122661",
+    to=agent_number,
+    twiml=f'<Response><Dial><Conference startConferenceOnEnter="true">Sales-{call_sid}</Conference></Dial></Response>'
+)
+```
+
+This pattern gives you call control (whisper to agent before connecting, supervisor barge-in, hold) that direct `<Dial>` does not.
+
+**Cost**: AMD adds ~$0.0075 per call to standard voice pricing.
+
+---
+
 ## Response Fields
 
 | Field | Description |
@@ -194,13 +286,17 @@ Recordings accessible at `https://api.twilio.com/2010-04-01/Accounts/{AccountSid
 
 ## CANNOT
 
-- **Cannot use a private TwiML URL** — Must be publicly accessible. Use ngrok for local development.
+- **Cannot use a private TwiML URL** — Must be publicly accessible. Use ngrok for local development only; deploy to a cloud provider for production.
 - **Cannot exceed ~4,096 characters in inline `twiml` parameter** — Use a TwiML URL for longer responses
 - **Cannot call unverified numbers on trial accounts** — Upgrade to paid or verify recipient numbers first
+- **AMD accuracy is ~85-90%** — Expect some false positives/negatives. Tune `machineDetectionSpeechThreshold` (default 2400ms) based on your results.
+- **AMD adds latency** — `Enable` mode returns results faster but may misclassify short greetings. `DetectMessageEnd` is more accurate but adds seconds before your app can act.
+- **Cannot use AMD with SIP Trunking** — AMD is only available on calls made via the Calls API
 
 ---
 
 ## Next Steps
 
-- **TwiML verb reference (Say, Gather, Dial, Record, Conference):** `twilio-voice-twiml`
+- **TwiML verb reference (Say, Gather, Dial, Record, Conference, Pay):** `twilio-voice-twiml`
 - **AI voice agents with real-time speech/LLM:** `twilio-voice-conversation-relay`
+- **Improve answer rates (Branded Calling, STIR/SHAKEN):** `twilio-numbers-senders`

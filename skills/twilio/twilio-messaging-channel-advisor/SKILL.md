@@ -26,7 +26,7 @@ Pair with `twilio-send-message` (for the actual send), `twilio-messaging-service
 
 ### 1. What content are you sending?
 - **Plain text only** → SMS (default), WhatsApp for international
-- **Media (image, video, PDF)** → MMS (US/CA only), WhatsApp, or RCS
+- **Media (image, video, PDF)** → MMS (US/CA/AU only), WhatsApp, or RCS
 - **Rich interactive (cards, carousels, buttons, suggested replies)** → RCS (branded, US reach + expanding) or WhatsApp (template-approved)
 
 ### 2. Where are your recipients?

@@ -14,7 +14,7 @@ Twilio's Messaging platform sends and receives messages across multiple channels
 
 | Channel | Address format | Rich media | Template required? | Reach | Skill |
 |---------|---------------|------------|-------------------|-------|-------|
-| **SMS/MMS** | `+15551234567` (E.164) | MMS: images/video, US/CA only | No | Global (180+ countries) | `twilio-sms-send-message` |
+| **SMS/MMS** | `+15551234567` (E.164) | MMS: images/video, US/CA/AU only | No | Global (180+ countries) | `twilio-sms-send-message` |
 | **WhatsApp** | `whatsapp:+15551234567` | Yes (images, docs, video, location) | Outside 24hr window: yes | 190+ countries | `twilio-whatsapp-send-message` |
 | **RCS** | Same number (via Messaging Service) | Yes (rich cards, carousels, video) | No | US + expanding globally | `twilio-rcs-messaging` |
 | **Facebook Messenger** | `messenger:{page-scoped-id}` | Yes | No | Global | — |
@@ -26,7 +26,7 @@ Twilio's Messaging platform sends and receives messages across multiple channels
 | If you need to... | Use | Why |
 |-------------------|-----|-----|
 | Reach any phone number | SMS | Universal — works on every phone, no app needed |
-| Send rich media globally | WhatsApp | Images, docs, video work worldwide (MMS is US/CA only) |
+| Send rich media globally | WhatsApp | Images, docs, video work worldwide (MMS is US/CA/AU only) |
 | Send time-sensitive alerts (OTP, outages) | SMS | Highest open rates, no app dependency |
 | Reach opted-in audience at lower cost | WhatsApp | No per-message fee in many markets |
 | Run marketing campaigns across channels | Start with `twilio-marketing-promotions-advisor` | Planner skill handles channel mix, compliance, and fallback |
@@ -117,7 +117,7 @@ Enable intelligent alerts for error pattern detection. Set up status callbacks f
 
 - **Cannot send cross-channel in a single API call** — Each `messages.create()` targets one channel. For multi-channel fallback, implement sequencing in your application (e.g., try SMS, on failure send WhatsApp).
 - **Cannot use WhatsApp free-form messages outside the 24-hour window** — After 24 hours since the user's last inbound message, you must use a pre-approved template. See `twilio-whatsapp-send-message`.
-- **Cannot send MMS outside US and Canada** — MMS is only supported on US/CA long codes. For international rich media, use WhatsApp.
+- **Cannot send MMS outside US, Canada, and Australia** — MMS is only supported on US/CA/AU numbers. For international rich media, use WhatsApp.
 - **Cannot use SMS pumping protection or compliance toolkit without a Messaging Service** — These features are configured per Messaging Service. Raw `from` number sends don't get these protections.
 - **Cannot mix channels in a single Messaging Service sender pool** — A Messaging Service manages phone numbers for SMS/MMS. WhatsApp senders are configured separately.
 - **Cannot guarantee delivery on any channel** — SMS can be carrier-filtered, WhatsApp can queue-timeout (4 hours). Always implement status callbacks to track delivery.
