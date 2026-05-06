@@ -24,8 +24,7 @@
     "api",
     "segment"
   ],
-  "skills": "./skills/"
-  },
+  "skills": "./skills/",
   "interface": {
     "displayName": "Twilio Developer Kit",
     "shortDescription": "Twilio Skills and MCP for building, debugging, and shipping on Twilio",
