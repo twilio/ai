@@ -168,8 +168,8 @@ Product Skills to Install:
 - twilio-sendgrid-email (if password reset emails or account admin — recommended)
 
 Setup Skills:
-- twilio-account-setup
-- twilio-iam-auth-setup
+- twilio-account-setup — if developer needs help with credentials or account structure
+- twilio-iam-auth-setup — if developer asks about API key scoping or security
 
 Guardrail Skills:
 - twilio-security-hardening (always — credential management, never expose Verify Service SID)
