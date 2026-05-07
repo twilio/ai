@@ -31,7 +31,7 @@
         "agent-connect",
         "enterprise-knowledge"
       ],
-      "mcp": {
+      "mcpServers": {
         "twilio-docs": {
           "command": "npx",
           "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://mcp.twilio.com/docs"]
