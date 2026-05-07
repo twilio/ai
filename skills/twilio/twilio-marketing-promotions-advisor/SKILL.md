@@ -47,7 +47,10 @@ Trigger on any of these signals:
    - Re-engagement (win-back) → Compliance-sensitive (previously opted-out?)
    - Event-driven (cart abandonment, browse behavior) → Needs real-time triggers, likely Segment integration
 
-2. **Which channels?** (Reference Channel Mix Matrix — Marketing column)
+2. **Which channel(s)?**
+   > **Channel selection:** If the developer hasn't confirmed a specific channel, invoke `twilio-messaging-channel-advisor` — it qualifies content type, geography, brand requirements, and use case to recommend the right channel mix. "Text," "text message," or "text campaign" defaults to SMS but may not be optimal — the channel advisor will surface better alternatives (RCS for rich/branded US sends, WhatsApp for LATAM/APAC) before committing to an architecture.
+
+   Quick reference for confirmed channels:
    - **SMS/MMS** → Highest open rates (98%), immediate. Best for time-sensitive offers. US requires A2P 10DLC compliance.
    - **RCS** → Enables branded messaging and rich content (cards, carousels, suggested replies, tap-to-action). Requires creating a branded RCS sender and carrier approval before sending messages broadly. Can send to allowlisted test devices. Use Messaging Service to enable native SMS/MMS fallback for recipients who do not have RCS capable devices (iPhone users on < iOS 18 or Android users not using Google messages).
    - **Email** → Highest volume capacity, lowest per-message cost. Best for rich content (images, HTML). Use `twilio-email-send` (Twilio Account SID + Auth Token, comms.twilio.com) or `twilio-sendgrid-email-send` (SendGrid API key, SG.-prefix).
@@ -163,14 +166,16 @@ Even for simple sends. Benefits: sender pool management, geo-matching (auto-sele
 After qualifying the developer, recommend:
 
 ```
-Recommended Architecture: [Level 1-3 description]
+Recommended Architecture: [Brief plain-language description of the recommended approach — e.g., "Single-channel WhatsApp campaign using pre-approved templates and a Messaging Service for delivery tracking."]
 
-Product Skills to Install:
+Reference Skills:
+- twilio-messaging-channel-advisor (if channel not yet confirmed — qualifies SMS vs RCS vs WhatsApp)
 - twilio-sms-send-message (if SMS channel)
+- twilio-rcs-messaging (if RCS channel)
 - twilio-email-send (if email channel, Twilio creds — Account SID + Auth Token) or twilio-sendgrid-email-send (if SendGrid API key, SG.-prefix)
 - twilio-whatsapp-send-message (if WhatsApp channel)
 - twilio-whatsapp-manage-senders (if WhatsApp production)
-- twilio-messaging-services (always for SMS at scale)
+- twilio-messaging-services (always for SMS/RCS at scale)
 - twilio-compliance-onboarding (if US SMS)
 - twilio-content-template-builder (if multi-channel templates)
 - twilio-lookup-phone-intelligence (if bulk sends — validate first)

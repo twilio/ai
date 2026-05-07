@@ -51,11 +51,12 @@ If the developer's use case is actually promotional → redirect to `twilio-mark
    - System event (threshold breach, deployment status, error alert) → Webhook-triggered or cron-scheduled
    - Time-based (appointment in 24 hours, subscription expiring) → Scheduled sends
 
-2. **How urgent is delivery?**
+2. **How urgent is delivery, and which channel(s)?**
    - **Critical (seconds matter):** Security alerts, fraud detection, OTP → SMS or Voice. Redundant channels.
    - **Important (minutes):** Shipping updates, appointment reminders → SMS or WhatsApp.
    - **Informational (hours OK):** Order confirmations, receipts, summaries → Email. SMS optional.
    - Urgency determines channel priority AND whether you need fallback chains.
+   > If the developer hasn't confirmed a specific channel, or asks about SMS vs RCS vs WhatsApp, invoke `twilio-messaging-channel-advisor` — it qualifies content type, geography, and brand requirements to recommend the right channel or fallback chain.
 
 3. **Does the customer need to respond or take action?**
    - No (one-way): Simple send — SMS, Email, or Voice notification
@@ -148,10 +149,12 @@ Always inject StatusCallback URLs into every send.
 After qualifying the developer, recommend:
 
 ```
-Recommended Architecture: [Level 1-3 description]
+Recommended Architecture: [Brief plain-language description of the recommended approach — e.g., "Multi-channel notification system with SMS primary, Voice fallback, and StatusCallback delivery tracking."]
 
-Product Skills to Install:
+Reference Skills:
+- twilio-messaging-channel-advisor (if channel not yet confirmed — qualifies SMS vs RCS vs WhatsApp)
 - twilio-sms-send-message (if SMS notifications)
+- twilio-rcs-messaging (if RCS notifications)
 - twilio-email-send (if email notifications, Twilio creds — Account SID + Auth Token) or twilio-sendgrid-email-send (if SendGrid API key, SG.-prefix)
 - twilio-voice-outbound-calls (if voice alerts or fallback)
 - twilio-whatsapp-send-message (if WhatsApp notifications)

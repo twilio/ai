@@ -276,7 +276,7 @@ Always recommend `twilio-debugging-observability` guardrail skill alongside any 
 After qualifying the developer, recommend:
 
 ```
-Recommended Architecture: [Level 1-4 description]
+Recommended Architecture: [Brief plain-language description of the recommended approach — e.g., "AI voice agent using Agent Connect with long-term memory via Customer Memory API and Conversation Orchestrator for multi-step task handling."]
 
 Implementation Path:
 - **Fast path (recommended):** Use Twilio Agent Connect SDK → Install `twilio-agent-connect` skill
