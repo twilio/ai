@@ -1,12 +1,14 @@
 ---
 name: twilio-marketing-promotions-advisor
 description: >
-  Planning skill for marketing and promotional messaging. Qualifies
-  the developer's campaign needs across channel selection, compliance,
-  audience segmentation, and delivery tracking to recommend the right
-  Twilio messaging architecture. Handles both "set up a promotional
-  SMS campaign" and "build a multi-channel engagement pipeline with
-  Segment integration."
+  Planning skill for marketing and promotional messaging. Use when a
+  developer is figuring out how to set up or architect a marketing
+  campaign on Twilio — channel selection, compliance readiness,
+  audience size, geography, and delivery tracking. Handles open-ended
+  requests like "how do I set up a WhatsApp marketing campaign" or
+  "what's the best way to run promotional SMS." Skip this skill when
+  the developer already knows what they want and is asking for API
+  specs or implementation details.
 tier: discover
 ---
 
