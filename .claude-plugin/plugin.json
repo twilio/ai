@@ -5,6 +5,10 @@
   "author": {
     "name": "Twilio"
   },
+  "skills": [
+    "./skills/twilio",
+    "./skills/sendgrid"
+  ],
   "mcpServers": {
     "twilio-docs": {
       "command": "npx",
