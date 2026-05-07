@@ -7,7 +7,7 @@
   "mcpServers": {
     "twilio-docs": {
       "command": "npx",
-      "args": ["mcp-remote", "https://mcp.twilio.com/docs"]
+      "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://mcp.twilio.com/docs"]
     }
   }
 }
