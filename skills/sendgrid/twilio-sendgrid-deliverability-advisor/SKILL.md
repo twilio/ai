@@ -242,10 +242,10 @@ Immediate Actions:
 3. [Third fix]
 
 Skills to Install:
-- twilio-sendgrid-account-setup (domain auth — SPF, DKIM, DMARC, link branding)
-- twilio-sendgrid-engagement-quality (SEQ score — SendGrid Pro/Premier)
-- twilio-sendgrid-suppressions (bounce and spam complaint management)
-- twilio-sendgrid-webhooks (delivery event monitoring)
+- twilio-sendgrid-account-setup — if domain auth (SPF, DKIM, DMARC, link branding) needs to be set up
+- twilio-sendgrid-engagement-quality — if developer wants to check SEQ score (SendGrid Pro/Premier)
+- twilio-sendgrid-suppressions — if bounce or spam complaint management is needed
+- twilio-sendgrid-webhooks — if developer needs delivery event monitoring
 ```
 
 ---

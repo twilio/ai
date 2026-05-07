@@ -109,6 +109,6 @@ Immediate Actions:
 3. [Third fix]
 
 Skills to Install:
-- twilio-email-send (Twilio Email sending — Account SID / Auth Token)
-- twilio-sendgrid-deliverability-advisor (if you discover the sender is using SendGrid)
+- twilio-email-send — if developer needs help sending email via Twilio (Account SID / Auth Token)
+- twilio-sendgrid-deliverability-advisor — if you discover the sender is using SendGrid instead
 ```

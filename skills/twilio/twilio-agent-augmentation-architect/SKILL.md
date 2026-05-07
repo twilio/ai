@@ -207,9 +207,9 @@ Product Skills to Install:
 - twilio-sendgrid-email-send (if post-call summary emails needed)
 
 Setup Skills:
-- twilio-account-setup
-- twilio-iam-auth-setup
-- twilio-webhook-architecture
+- twilio-account-setup — if developer needs help with credentials or account structure
+- twilio-iam-auth-setup — if developer asks about API key scoping or security
+- twilio-webhook-architecture — if developer needs help designing or securing webhook endpoints
 
 Guardrail Skills:
 - twilio-security-hardening (always)

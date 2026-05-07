@@ -158,10 +158,10 @@ Product Skills to Install:
 - twilio-messaging-services (if volume > 100/day or multi-number)
 
 Setup Skills:
-- twilio-account-setup
-- twilio-iam-auth-setup
-- twilio-numbers-senders
-- twilio-webhook-architecture (StatusCallbacks, delivery tracking)
+- twilio-account-setup — if developer needs help with credentials or account structure
+- twilio-iam-auth-setup — if developer asks about API key scoping or security
+- twilio-numbers-senders — number type selection affects throughput and compliance timelines; use when choosing between local, toll-free, or short code
+- twilio-webhook-architecture — if developer needs help with StatusCallbacks or delivery tracking webhooks
 
 Guardrail Skills:
 - twilio-reliability-patterns (always — backoff, retry, fallback chains)
