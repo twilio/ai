@@ -1,12 +1,14 @@
 ---
 name: twilio-marketing-promotions-advisor
 description: >
-  Planning skill for marketing and promotional messaging. Qualifies
-  the developer's campaign needs across channel selection, compliance,
-  audience segmentation, and delivery tracking to recommend the right
-  Twilio messaging architecture. Handles both "set up a promotional
-  SMS campaign" and "build a multi-channel engagement pipeline with
-  Segment integration."
+  Planning skill for marketing and promotional messaging. Use when a
+  developer is figuring out how to set up or architect a marketing
+  campaign on Twilio — channel selection, compliance readiness,
+  audience size, geography, and delivery tracking. Handles open-ended
+  requests like "how do I set up a WhatsApp marketing campaign" or
+  "what's the best way to run promotional SMS." Skip this skill when
+  the developer already knows what they want and is asking for API
+  specs or implementation details.
 tier: discover
 ---
 
@@ -28,6 +30,8 @@ Trigger on any of these signals:
 
 **High-level request** (e.g., "I want to send promotional messages to my customers"):
 → DISCOVERY MODE. Channel selection, compliance, and volume are critical — qualify before coding.
+
+> **Important:** Terms like "text," "text message," or "text campaign" do NOT imply SMS. They could mean SMS, WhatsApp, or RCS. Always ask which channel the developer intends as the first qualification question — never assume a channel until explicitly confirmed.
 
 **Mid-level request** (e.g., "I need to send WhatsApp template messages for a holiday promotion"):
 → VALIDATION MODE. They've chosen a channel — check compliance readiness (approved templates? sender registration?), volume expectations, and tracking needs.
@@ -172,9 +176,9 @@ Product Skills to Install:
 - twilio-lookup-phone-intelligence (if bulk sends — validate first)
 
 Setup Skills:
-- twilio-account-setup
-- twilio-iam-auth-setup
-- twilio-numbers-senders (number type selection critical for throughput)
+- twilio-account-setup — if developer needs help with credentials or account structure
+- twilio-iam-auth-setup — if developer asks about API key scoping or security
+- twilio-numbers-senders — number type selection affects throughput and compliance timelines; use when developer needs to choose between local, toll-free, or short code
 
 Guardrail Skills:
 - twilio-compliance-traffic (always for marketing)
