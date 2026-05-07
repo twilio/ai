@@ -169,22 +169,22 @@ Trigger on any of these signals:
 After qualifying the developer, recommend:
 
 ```
-Recommended Architecture: [Level 1-4 description]
+Recommended Architecture: [Brief plain-language description of the recommended approach — e.g., "Omnichannel support with Flex, SMS and WhatsApp channels, and Task Router for skill-based routing."]
 
-Product Skills to Install:
+Reference Skills:
 - twilio-voice-twiml (always for voice support)
 - twilio-voice-outbound-calls (if outbound calling needed)
 - twilio-sms-send-message (if SMS support channel)
 - twilio-messaging-webhooks (if inbound SMS)
 - twilio-email-send (if email channel with Twilio Account SID + Auth Token) or twilio-sendgrid-email-send (if email channel with SendGrid API key)
 - twilio-conversations-api (if omnichannel threading)
-- twilio-taskrouter-routing (if multi-agent — Level 3+)
-- twilio-conference-calls (if transfers/coaching — Level 3+)
-- twilio-call-recordings (if recording needed — Level 3+)
+- twilio-taskrouter-routing (if multi-agent routing needed)
+- twilio-conference-calls (if transfers/coaching needed)
+- twilio-call-recordings (if recording needed)
 
 Cross-reference Planner Skills:
-- twilio-ai-agent-architect (if Level 2 — AI self-service)
-- twilio-agent-augmentation-architect (if Level 4 — intelligent CC)
+- twilio-ai-agent-architect (if AI self-service layer needed)
+- twilio-agent-augmentation-architect (if intelligent contact center needed)
 
 Setup Skills:
 - twilio-account-setup — if developer needs help with credentials or account structure

@@ -159,9 +159,9 @@ OTP delivery cost varies dramatically by country. If you expect high verificatio
 After qualifying the developer, recommend:
 
 ```
-Recommended Architecture: [Level 1-4 description]
+Recommended Architecture: [Brief plain-language description of the recommended approach — e.g., "SMS OTP via Twilio Verify with Lookup line type intelligence for pre-verification fraud screening."]
 
-Product Skills to Install:
+Reference Skills:
 - twilio-verify-send-otp (always — core verification)
 - twilio-lookup-phone-intelligence (if Level 3+ — fraud risk assessment)
 - twilio-sms-send-message (if account admin notifications)

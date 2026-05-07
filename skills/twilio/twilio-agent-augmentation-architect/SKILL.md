@@ -195,14 +195,14 @@ What does NOT work at GA:
 After qualifying the developer, recommend:
 
 ```
-Recommended Architecture: [Level 1-4 description]
+Recommended Architecture: [Brief plain-language description of the recommended approach — e.g., "AI-augmented voice agent with real-time transcription, sentiment analysis, and agent assist suggestions via Twilio Flex."]
 
-Product Skills to Install:
-- twilio-call-recordings (if Level 1+, recording needed)
-- twilio-conversation-intelligence (if Level 2+)
-- twilio-customer-memory (if Level 3+)
-- twilio-conversation-orchestrator (if Level 3+)
-- twilio-taskrouter-routing (if Level 4)
+Reference Skills:
+- twilio-call-recordings (if recording needed)
+- twilio-conversation-intelligence (if transcription and AI insights needed)
+- twilio-customer-memory (if persistent customer context needed)
+- twilio-conversation-orchestrator (if multi-step orchestration needed)
+- twilio-taskrouter-routing (if intelligent routing needed)
 - twilio-voice-insights (for call quality diagnostics)
 - twilio-sendgrid-email-send (if post-call summary emails needed)
 
