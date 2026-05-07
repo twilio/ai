@@ -26,7 +26,6 @@
     "conversation-orchestrator",
     "agent-connect",
     "enterprise-knowledge",
-    "apple-messages-for-business",
     "api"
   ],
   "skills": "./skills/",

@@ -29,8 +29,7 @@
         "conversation-intelligence",
         "conversation-orchestrator",
         "agent-connect",
-        "enterprise-knowledge",
-        "apple-messages-for-business"
+        "enterprise-knowledge"
       ],
       "mcp": {
         "twilio-docs": {
