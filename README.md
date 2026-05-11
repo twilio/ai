@@ -82,6 +82,7 @@ Add the MCP server in Cursor Settings > MCP:
 ```json
 {
   "twilio-docs": {
+    "type": "http",
     "url": "https://mcp.twilio.com/docs"
   }
 }
