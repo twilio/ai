@@ -1,6 +1,6 @@
 {
   "name": "twilio-developer-kit",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Complete set of Twilio skills. Covers Setup, Planner, Product, and Guardrail skills across SMS, Voice, WhatsApp, AI agents, Conversation Orchestrator, and 30+ products.",
   "author": {
     "name": "Twilio"
@@ -11,8 +11,8 @@
   ],
   "mcpServers": {
     "twilio-docs": {
-      "command": "npx",
-      "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://mcp.twilio.com/docs"]
+      "type": "http",
+      "url": "https://mcp.twilio.com/docs"
     }
   }
 }
