@@ -187,7 +187,7 @@ tac.onMessageReady(async ({ conversationId, message, memory, session }) => {
   conversationHistory[convId].push({ role: 'user', content: message });
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-5.4-mini',
     messages: [
       { role: 'system', content: systemPrompt },
       ...conversationHistory[convId],
