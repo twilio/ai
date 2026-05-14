@@ -22,11 +22,11 @@ Security hardening is an **ongoing** concern — not a one-time setup. This skil
 
 | Credential | Scope | Revocable | Use when |
 |-----------|-------|-----------|----------|
-| **Auth Token** | Full account access | Only by rotating (invalidates ALL API keys) | Never in production — use API keys instead |
+| **Auth Token** | Full account access | Only by rotating (invalidates all token-based integrations and webhook signature validation — API keys unaffected) | Avoid in production — use API keys instead |
 | **API Key + Secret** | Scoped, revocable individually | Yes — revoke one without affecting others | Production applications, CI/CD, server-side code |
 | **Access Tokens** | Short-lived, client-specific | Expire automatically | Client-side SDKs (Voice, Video, Conversations) |
 
-**Critical gotcha:** Rotating your Auth Token **invalidates ALL existing API keys**. This is a one-way door that can break every integration simultaneously. Use API keys from the start so you never need to rotate the Auth Token.
+**Critical gotcha:** Rotating your Auth Token invalidates all integrations authenticating with `AccountSID:AuthToken` and breaks webhook signature validation — it does NOT affect API keys (SK-prefixed), which are independent. Use API keys from the start so you rarely need to rotate the Auth Token.
 
 ### Best Practices
 
@@ -62,6 +62,8 @@ app.post("/sms", (req, res) => {
     // Process webhook...
 });
 ```
+
+**Note:** Webhook signature validation always uses your Auth Token — not an API Key Secret. This is the one legitimate production use of the Auth Token. Keep it accessible for request validation but store it securely (environment variable or secrets manager).
 
 **Common mistakes:**
 - Using HTTP URL when Twilio sends to HTTPS (URL must match exactly)
@@ -134,7 +136,7 @@ Restrict which countries can receive messages or calls from your account:
 2. **No webhook validation** — Attackers can send fake webhook requests to your endpoints.
 3. **PCI Mode on main account** — Irreversible. Use a sub-account for payment use cases.
 4. **No geo-permissions** — Account is open to SMS pumping from any country.
-5. **Auth Token rotation without planning** — Breaks all API keys simultaneously.
+5. **Auth Token rotation without planning** — Breaks all integrations using `AccountSID:AuthToken` and webhook signature validation simultaneously. API keys are unaffected.
 
 ---
 

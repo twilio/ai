@@ -14,7 +14,7 @@ Twilio supports four authentication methods. Choosing the wrong one is a securit
 
 | Method | Use for | Token lifetime | Revocable individually |
 |--------|---------|---------------|----------------------|
-| **Auth Token** | Local testing only | Permanent (until rotated) | No — rotation breaks ALL API keys |
+| **Auth Token** | Local testing only | Permanent (until rotated) | No — rotation invalidates all integrations using that token and breaks webhook signature validation; API keys (SK-prefixed) are unaffected |
 | **API Key + Secret** | Production server-side | Permanent (until deleted) | Yes |
 | **OAuth2 Bearer Token** | Production server-side (enhanced) | 1 hour | Expires automatically |
 | **Access Token (JWT)** | Client-side SDKs (Voice, Video, Chat) | Up to 24 hours | No — delete issuing API key |
@@ -154,7 +154,7 @@ Magic numbers: `+15005550006` (valid), `+15005550001` (invalid, error 21211), `+
 - **OAuth2 only supports `client_credentials` grant** — No refresh tokens, no authorization code flow.
 - **OAuth2 tokens expire after 1 hour** — Your application must handle token refresh.
 - **API Key Secret shown only at creation** — Cannot be retrieved afterward.
-- **Auth Token rotation breaks ALL API keys** — One-way door. This is why you should use API keys from day one.
+- **Auth Token rotation does not affect API keys** — It invalidates all integrations using `AccountSID:AuthToken` and breaks webhook signature validation, but API keys (SK-prefixed) are independent and unaffected. This is why API keys are recommended for production from day one.
 - **Test credentials work with only 4 endpoints** — Messages, Calls, IncomingPhoneNumbers, Lookups. All others return 403.
 
 ---
