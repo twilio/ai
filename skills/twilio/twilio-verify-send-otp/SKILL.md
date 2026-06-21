@@ -46,6 +46,10 @@ Verify supports SMS, voice, email, WhatsApp, and RCS — only the `channel` para
 
 ## Quickstart
 
+> **Note**: As of OAI 2.6.7, the `Tags` parameter on verification requests has an updated description for clarity on usage patterns and formatting.
+
+
+
 **Step 1 — Create a Verify Service (one-time)**
 
 **Python**
