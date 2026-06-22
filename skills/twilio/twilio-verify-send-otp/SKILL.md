@@ -224,7 +224,7 @@ const service = await client.verify.v2.services.create({
 
 Attach metadata tags to verifications for tracking and analytics. Tags are included in:
 - Verification status events
-- Message status event payloads  
+- Message status event payloads
 - Webhook callbacks
 
 **Python**
@@ -272,7 +272,7 @@ Use anonymous identifiers instead:
 
 **Limits**:
 - Maximum 10 tags per verification
-- Keys and values: 128 characters max each  
+- Keys and values: 128 characters max each
 - Format: JSON string
 
 **Use cases**:
