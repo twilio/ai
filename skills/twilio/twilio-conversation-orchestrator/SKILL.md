@@ -172,7 +172,7 @@ Automatically extract observations from conversations into Conversation Memory. 
 - **Not recommended to combine passive VOICE capture rules with active TwiML voice (ConversationRelay or Transcription with conversation parameters)** — You will be double-charged for STT. The system does not prevent this configuration, but it is not recommended. Passive voice capture uses Real-Time Transcription (RTT) under the hood. If you pass `conversationConfiguration` or `conversationId` in `<ConversationRelay>` or `<Transcription>` TwiML, you are using active ingestion which has its own STT engine. Both engines will run = double STT billing. Use active TwiML (pass conversation parameters) OR passive capture rules (captureRules), not both for the same traffic. See the [Voice Double Billing Warning](#️-critical-voice-double-billing-warning) section above.
 - **Cannot detect failed Memory linkage** — If `memoryStoreId` points to a deleted or invalid store, capture still works but identity resolution and extraction silently fail. See `twilio-debugging-observability`.
 - **Cannot filter Intelligence operators by participant type** — Operators fire on ALL Communications (customer and agent). Use the operator prompt to specify which participant to analyze.
-- **Cannot extract Memory observations mid-conversation (ACTIVE state)** — Extraction is opt-in and can fire on INACTIVE and/or CLOSED lifecycle transitions, but not while the conversation is ACTIVE. For real-time Memory writes during an active conversation, post Observations directly via `twilio-customer-memory`.
+- **Cannot extract Memory observations mid-conversation (ACTIVE state)** — Extraction is opt-in and can fire on INACTIVE and/or CLOSED lifecycle transitions, but not while the conversation is ACTIVE. For real-time Memory writes during an active conversation, post Observations directly via `twilio-conversation-memory`.
 - **Cannot have conversations pick up config changes retroactively** — Conversations pin the Configuration version at creation time. Close existing conversations to apply updated rules.
 - **Cannot use the POST response to get the Configuration ID** — Creation returns 202 with an operation. Poll the operation's `statusUrl` until `status` is `COMPLETED`, then retrieve the configuration ID from the operation result.
 - **No standalone operation** — Requires a Memory Store because Conversation Orchestrator uses profiles for identity resolution. `memoryStoreId` is mandatory when creating a Configuration.
@@ -574,7 +574,7 @@ Still define VOICE in `channelSettings` for lifecycle/timeouts — just omit `ca
 
 ### Setup
 
-1. **Memory Store is required.** You cannot create a Configuration without a `memoryStoreId`. Create the Memory Store first via `twilio-customer-memory`.
+1. **Memory Store is required.** You cannot create a Configuration without a `memoryStoreId`. Create the Memory Store first via `twilio-conversation-memory`.
 
 2. **JSON-only API.** All Conversation Orchestrator endpoints require `Content-Type: application/json`. Form-encoded bodies are rejected. This matches Intelligence v3 but differs from most Twilio APIs.
 
@@ -610,7 +610,7 @@ Still define VOICE in `channelSettings` for lifecycle/timeouts — just omit `ca
 
 15. **No participant type filtering for Intelligence.** Operators fire on ALL Communications — customer messages AND agent responses. There is no config-level filter. Use the operator prompt to specify which participant to analyze.
 
-16. **Memory extraction is opt-in and fires on INACTIVE and/or CLOSED.** Extraction does not run automatically — it must be enabled. It can be configured to fire on the INACTIVE transition, the CLOSED transition, or both. It does NOT fire while a conversation is ACTIVE. For mid-conversation Memory writes, post directly to the Observations endpoint via `twilio-customer-memory`.
+16. **Memory extraction is opt-in and fires on INACTIVE and/or CLOSED.** Extraction does not run automatically — it must be enabled. It can be configured to fire on the INACTIVE transition, the CLOSED transition, or both. It does NOT fire while a conversation is ACTIVE. For mid-conversation Memory writes, post directly to the Observations endpoint via `twilio-conversation-memory`.
 
 17. **List endpoints return partial data.** When listing Conversations or Communications via GET `/Conversations` or `/Conversations/{id}/Communications`, response objects are missing fields that are present when fetching individual resources. Missing fields include `dateCreated` (list) vs `createdAt` (single GET), `channels`, `body`, and `channel`. Always use defensive field access (`conv?.createdAt` or `conv.get('createdAt')`) and fetch individual resources if you need complete data. Example:
 ```javascript
@@ -629,7 +629,7 @@ for (const conv of list.conversations) {
 ## Related Resources
 
 - [Conversation Intelligence Skill](/.claude/skills/twilio-conversation-intelligence/SKILL.md) — Intelligence Configuration, Language Operators, real-time and post-conversation analysis
-- [Customer Memory Skill](/.claude/skills/twilio-customer-memory/SKILL.md) — Memory Store, profiles, traits, observations, Recall
+- [Customer Memory Skill](/.claude/skills/twilio-conversation-memory/SKILL.md) — Memory Store, profiles, traits, observations, Recall
 - [ConversationRelay Skill](/.claude/skills/twilio-voice-conversation-relay/SKILL.md) — Voice AI agent setup with WebSocket streaming
 - [Agent Connect Skill](/.claude/skills/twilio-agent-connect/SKILL.md) — AI-to-human escalation via TAC SDK
 - [Debugging Skill](/.claude/skills/twilio-debugging-observability/SKILL.md) — Error triage, Event Streams, linkage chain verification

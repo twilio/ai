@@ -1,51 +1,56 @@
 ---
 name: twilio-enterprise-knowledge
 description: >
-  Add knowledge retrieval to AI agents using Twilio's Enterprise Knowledge
-  product. Enterprise Knowledge is a centralized, searchable repository of your
-  organization's documents, websites, and content — FAQs, support policies,
-  warranty terms, product catalogs. Current models don't have access to how you
-  run your business today. Enterprise Knowledge gives agents a way to query this
-  repository during a conversation and ground their responses in your actual
-  approved source material. This skill covers provisioning a Knowledge Base and
-  uploading knowledge sources from web URLs, PDFs, and raw text, and running
-  semantic search to retrieve relevant chunks at runtime. Enterprise Knowledge is
-  shared across your organization — it captures what your organization knows and
-  how it is meant to run. It is distinct from Conversation Memory
-  (twilio-customer-memory), which is scoped to individual end-customers and
-  captures what you know about a specific person. The two are designed to be
-  combined: enterprise content for business practices, customer memory for
-  personalization.
+  Add knowledge retrieval (RAG) to AI agents using Twilio Enterprise Knowledge.
+  Covers provisioning Knowledge Bases, uploading sources from web URLs, PDFs,
+  and raw text, and running semantic search to retrieve relevant chunks at
+  runtime. Use this skill to ground agent responses in your organization's
+  actual approved content — FAQs, policies, product docs — rather than
+  hallucinated answers.
 ---
 
 ## Overview
 
-Enterprise Knowledge gives AI and human agents access to your organization's actual source material during a conversation — FAQs, warranty policies, support scripts, product catalogs. Models trained on general data don't know how your business operates today; Enterprise Knowledge closes that gap by letting agents query a searchable repository of your approved content and inject accurate, up-to-date answers rather than hallucinated ones.
+Enterprise Knowledge gives AI agents access to your organization's source material during conversations — FAQs, warranty policies, support scripts, product catalogs. It closes the gap between general model knowledge and how your business actually operates.
 
 ```
 Your content (web/PDF/text) → Knowledge Base → Indexed chunks
 Agent query → Search → Ranked chunks → Inject into LLM prompt
 ```
 
-Enterprise Knowledge is shared across your organization and captures institutional content: how your products work, what your policies say, what your agents are supposed to do. It is distinct from Conversation Memory, which is scoped to individual end-customers. The two are designed to be combined — enterprise content for accuracy and business practices, customer memory for personalization.
+Enterprise Knowledge is shared across your organization — it captures institutional content. It is distinct from Conversation Memory (`twilio-conversation-memory`), which is per-customer context. The two are designed to be combined: enterprise content for accuracy, customer memory for personalization.
 
-**Auth: Basic Auth** — `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN`.
+**Base URL:** `https://knowledge.twilio.com`
+
+**Authentication:** HTTP Basic — `Authorization: Basic {base64(accountSid:authToken)}`
+
+**Rules for agents:**
+- Always poll `statusUrl` after any 202 response — all writes are async
+- Always wait for Knowledge Base status `COMPLETED` before adding sources
+- Always wait for source processing to complete before searching
+- Never use `/v1/` paths — all routes use `/v2/` prefix
+- Never include auth headers when uploading to presigned URLs — they're already signed
+- Never use spaces or underscores in `displayName` — pattern is `^[a-zA-Z0-9-]+$`
+- Never exceed 16MB per file upload or 1,048,576 chars per text source
 
 ---
 
 ## Prerequisites
 
-- Twilio account with Enterprise Knowledge access (requires enablement)
-  — New to Twilio? See `twilio-account-setup`
-- `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` — see `twilio-iam-auth-setup`
+- Twilio account with Enterprise Knowledge enabled
+  — A credit card must be added to the account
+  — See `twilio-account-setup` for initial setup
+  — See `twilio-iam-auth-setup` for credential best practices
+- Environment variables:
+  - `TWILIO_ACCOUNT_SID`
+  - `TWILIO_AUTH_TOKEN`
+- SDK: `pip install twilio` / `npm install twilio`
 
 ---
 
 ## Quickstart
 
-### Step 1 — Create a Knowledge Base
-
-Knowledge Bases are containers for knowledge sources. Creation is async — returns 202, poll the `Location` header until `status: ACTIVE`.
+**Step 1 — Create a Knowledge Base**
 
 **Python**
 ```python
@@ -53,192 +58,147 @@ import os, requests, time
 
 account_sid = os.environ["TWILIO_ACCOUNT_SID"]
 auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+base_url = "https://knowledge.twilio.com"
+auth = (account_sid, auth_token)
 
 res = requests.post(
-    "https://memory.twilio.com/v1/ControlPlane/KnowledgeBases",
-    auth=(account_sid, auth_token),
-    json={
-        "displayName": "product-docs",          # alphanumeric + hyphens only
-        "description": "Product documentation for customer support agents"
-    }
+    f"{base_url}/v2/ControlPlane/KnowledgeBases",
+    auth=auth,
+    json={"displayName": "product-docs", "description": "Support agent knowledge"}
 )
 
-operation_url = res.headers["Location"]
+status_url = res.json()["statusUrl"]
 
-# Poll until ready
 while True:
-    kb = requests.get(operation_url, auth=(account_sid, auth_token)).json()
-    if kb.get("status") == "ACTIVE":
-        kb_id = kb["id"]
+    op = requests.get(status_url, auth=auth).json()
+    if op["status"] == "COMPLETED":
+        kb_id = op["result"]["id"]
         break
-    if kb.get("status") == "FAILED":
-        raise Exception("Knowledge Base creation failed")
+    if op["status"] == "FAILED":
+        raise Exception(op["error"]["detail"])
     time.sleep(2)
 
-print(kb_id)
+print(kb_id)  # know_knowledgebase_xxx
 ```
 
 **Node.js**
 ```javascript
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
+const baseUrl = "https://knowledge.twilio.com";
 const authHeader = "Basic " + btoa(`${accountSid}:${authToken}`);
+const headers = { "Authorization": authHeader, "Content-Type": "application/json" };
 
-const res = await fetch("https://memory.twilio.com/v1/ControlPlane/KnowledgeBases", {
+const res = await fetch(`${baseUrl}/v2/ControlPlane/KnowledgeBases`, {
     method: "POST",
-    headers: {
-        "Authorization": authHeader,
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        displayName: "product-docs",
-        description: "Product documentation for customer support agents",
-    }),
+    headers,
+    body: JSON.stringify({ displayName: "product-docs", description: "Support agent knowledge" }),
 });
 
-const operationUrl = res.headers.get("Location");
+const { statusUrl } = await res.json();
 
 let kbId;
 while (true) {
-    const kb = await fetch(operationUrl, {
-        headers: { "Authorization": authHeader },
-    }).then(r => r.json());
-    if (kb.status === "ACTIVE") { kbId = kb.id; break; }
-    if (kb.status === "FAILED") throw new Error("Knowledge Base creation failed");
+    const op = await fetch(statusUrl, { headers: { "Authorization": authHeader } }).then(r => r.json());
+    if (op.status === "COMPLETED") { kbId = op.result.id; break; }
+    if (op.status === "FAILED") throw new Error(op.error.detail);
     await new Promise(r => setTimeout(r, 2000));
 }
 ```
 
-### Step 2 — Add a Knowledge Source
+**Step 2 — Add a Knowledge Source**
 
-Three source types: **Web** (crawl a URL), **File** (upload PDF/CSV/Markdown/text), **Text** (inline raw text).
+Three source types: **Web** (crawl a URL), **File** (upload PDF/CSV/Markdown/text, max 16MB), **Text** (inline, max 1,048,576 chars).
 
-#### Web source
-
+**Python**
 ```python
 knowledge = requests.post(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Knowledge",
-    auth=(account_sid, auth_token),
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Knowledge",
+    auth=auth,
     json={
         "name": "Product Documentation",
         "description": "Public product docs",
-        "source": {
-            "type": "Web",
-            "url": "https://docs.example.com",
-            "crawlDepth": 3,           # 1–10, default 2
-            "crawlPeriod": "WEEKLY"    # WEEKLY | BIWEEKLY | MONTHLY | NEVER
-        }
+        "source": {"type": "Web", "url": "https://docs.example.com", "crawlDepth": 3}
     }
 ).json()
 
 knowledge_id = knowledge["id"]
 ```
 
-#### File source (PDF, CSV, Markdown, TSV, plain text — max 16MB)
+**Node.js**
+```javascript
+const knowledge = await fetch(`${baseUrl}/v2/KnowledgeBases/${kbId}/Knowledge`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+        name: "Product Documentation",
+        description: "Public product docs",
+        source: { type: "Web", url: "https://docs.example.com", crawlDepth: 3 },
+    }),
+}).then(r => r.json());
 
-```python
-# Step 1: Create the source — returns a presigned upload URL
-knowledge = requests.post(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Knowledge",
-    auth=(account_sid, auth_token),
-    json={
-        "name": "Company Handbook",
-        "source": {
-            "type": "File",
-            "fileName": "handbook.pdf",
-            "fileSize": 2048576,
-            "mimeType": "application/pdf"
-        }
-    }
-).json()
-
-knowledge_id = knowledge["id"]
-upload_url = knowledge["source"]["importUrl"]   # presigned S3 URL
-
-# Step 2: PUT file to presigned URL — no auth header, URL is already signed
-with open("handbook.pdf", "rb") as f:
-    requests.put(upload_url, data=f, headers={"Content-Type": "application/pdf"})
+const knowledgeId = knowledge.id;
 ```
 
-#### Text source (inline content, max 185,000 chars)
+**Step 3 — Wait for processing**
 
+Sources are processed asynchronously. Poll until `status` is `COMPLETED`.
+
+**Python**
 ```python
-knowledge = requests.post(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Knowledge",
-    auth=(account_sid, auth_token),
-    json={
-        "name": "Refund Policy",
-        "source": {
-            "type": "Text",
-            "content": "Our refund policy: customers may return items within 30 days..."
-        }
-    }
-).json()
+while True:
+    k = requests.get(
+        f"{base_url}/v2/KnowledgeBases/{kb_id}/Knowledge/{knowledge_id}", auth=auth
+    ).json()
+    if k["status"] == "COMPLETED":
+        break
+    if k["status"] == "FAILED":
+        raise Exception(f"Processing failed: {k}")
+    time.sleep(3)
 ```
 
-### Step 3 — Wait for Processing
-
-Knowledge sources are processed asynchronously. Poll until `status` is `COMPLETED`.
-
-```python
-def wait_for_knowledge(kb_id, knowledge_id):
-    while True:
-        k = requests.get(
-            f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Knowledge/{knowledge_id}",
-            auth=(account_sid, auth_token)
-        ).json()
-        if k["status"] == "COMPLETED":
-            return k
-        if k["status"] == "FAILED":
-            raise Exception(f"Knowledge processing failed: {k}")
-        time.sleep(3)
-
-wait_for_knowledge(kb_id, knowledge_id)
+**Node.js**
+```javascript
+while (true) {
+    const k = await fetch(
+        `${baseUrl}/v2/KnowledgeBases/${kbId}/Knowledge/${knowledgeId}`,
+        { headers: { "Authorization": authHeader } }
+    ).then(r => r.json());
+    if (k.status === "COMPLETED") break;
+    if (k.status === "FAILED") throw new Error(JSON.stringify(k));
+    await new Promise(r => setTimeout(r, 3000));
+}
 ```
 
 Statuses: `SCHEDULED` → `QUEUED` → `PROCESSING` → `COMPLETED` / `FAILED`
 
-### Step 4 — Search and Inject into LLM
+**Step 4 — Search and inject into LLM prompt**
 
 **Python**
 ```python
 results = requests.post(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Search",
-    auth=(account_sid, auth_token),
-    json={
-        "query": "How do I reset my password?",
-        "top": 5,                              # max 20
-        "knowledgeIds": [knowledge_id]         # optional — search specific sources
-    }
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Search",
+    auth=auth,
+    json={"query": "How do I reset my password?", "top": 5}
 ).json()
 
-chunks = "\n\n".join(c["content"] for c in results.get("chunks", []))
+chunks = "\n\n".join(c["content"] for c in results["chunks"])
 
 system_prompt = f"""You are a helpful support agent.
 
 Relevant knowledge:
 {chunks}
 
-Answer the customer's question using only the above content."""
+Answer using only the above content."""
 ```
 
 **Node.js**
 ```javascript
-const results = await fetch(
-    `https://knowledge.twilio.com/v1/KnowledgeBases/${kbId}/Search`,
-    {
-        method: "POST",
-        headers: {
-            "Authorization": authHeader,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            query: userMessage,
-            top: 5,
-            knowledgeIds: [knowledgeId],
-        }),
-    }
-).then(r => r.json());
+const results = await fetch(`${baseUrl}/v2/KnowledgeBases/${kbId}/Search`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ query: "How do I reset my password?", top: 5 }),
+}).then(r => r.json());
 
 const chunks = results.chunks.map(c => c.content).join("\n\n");
 const systemPrompt = `You are a helpful support agent.\n\nRelevant knowledge:\n${chunks}`;
@@ -248,106 +208,209 @@ const systemPrompt = `You are a helpful support agent.\n\nRelevant knowledge:\n$
 
 ## Key Patterns
 
-### Combine Enterprise Knowledge with Conversation Memory Recall
+### Combine with Conversation Memory
 
-For the best agent responses, combine both: Enterprise Knowledge for company content, Recall for individual customer history.
+For the best agent responses, combine Enterprise Knowledge (company content) with Conversation Memory Recall (individual customer history).
 
 **Python**
 ```python
-# Run both in parallel
 recall_res = requests.post(
-    f"https://memory.twilio.com/v1/Services/{MEMORY_STORE_SID}/Profiles/{profile_id}/Recall",
-    auth=(account_sid, auth_token),
+    f"https://memory.twilio.com/v1/Stores/{store_id}/Profiles/{profile_id}/Recall",
+    auth=auth,
     json={"query": user_query, "observationsLimit": 5}
-)
+).json()
+
 search_res = requests.post(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{KB_ID}/Search",
-    auth=(account_sid, auth_token),
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Search",
+    auth=auth,
     json={"query": user_query, "top": 3}
-)
+).json()
 
-customer_history = "\n".join(o["content"] for o in recall_res.json().get("observations", []))
-knowledge_chunks = "\n\n".join(c["content"] for c in search_res.json().get("chunks", []))
+customer_context = "\n".join(o["content"] for o in recall_res.get("observations", []))
+knowledge = "\n\n".join(c["content"] for c in search_res.get("chunks", []))
 
-system_prompt = f"""Customer history:
-{customer_history}
-
-Relevant documentation:
-{knowledge_chunks}"""
+system_prompt = f"""Customer history:\n{customer_context}\n\nDocumentation:\n{knowledge}"""
 ```
 
-### Refresh Stale Web Sources
+**Node.js**
+```javascript
+const [recallRes, searchRes] = await Promise.all([
+    fetch(`https://memory.twilio.com/v1/Stores/${storeId}/Profiles/${profileId}/Recall`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ query: userQuery, observationsLimit: 5 }),
+    }).then(r => r.json()),
+    fetch(`${baseUrl}/v2/KnowledgeBases/${kbId}/Search`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ query: userQuery, top: 3 }),
+    }).then(r => r.json()),
+]);
 
-Re-crawl a web source without changing its config:
+const customerContext = recallRes.observations.map(o => o.content).join("\n");
+const knowledge = searchRes.chunks.map(c => c.content).join("\n\n");
+```
 
+### File Upload (PDF/CSV/Markdown)
+
+File sources return a presigned URL. Upload the file there — do not include auth headers.
+
+**Python**
 ```python
-requests.patch(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Knowledge/{knowledge_id}?refresh=true",
-    auth=(account_sid, auth_token),
-    json={}
-)
-# Returns 202 — source re-queued for processing
+knowledge = requests.post(
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Knowledge",
+    auth=auth,
+    json={"name": "Handbook", "description": "Employee handbook", "source": {"type": "File"}}
+).json()
+
+upload_url = knowledge["source"]["importUrl"]
+
+with open("handbook.pdf", "rb") as f:
+    requests.put(upload_url, data=f, headers={"Content-Type": "application/pdf"})
+```
+
+**Node.js**
+```javascript
+const knowledge = await fetch(`${baseUrl}/v2/KnowledgeBases/${kbId}/Knowledge`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ name: "Handbook", description: "Employee handbook", source: { type: "File" } }),
+}).then(r => r.json());
+
+const file = await fs.promises.readFile("handbook.pdf");
+await fetch(knowledge.source.importUrl, {
+    method: "PUT",
+    headers: { "Content-Type": "application/pdf" },
+    body: file,
+});
 ```
 
 ### Filter Search to Specific Sources
 
-When your knowledge base has multiple sources (scripts, FAQs, policies), target search to the relevant one:
+When your Knowledge Base has multiple sources, target search to specific ones:
 
+**Python**
 ```python
 results = requests.post(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Search",
-    auth=(account_sid, auth_token),
-    json={
-        "query": "cancellation policy",
-        "top": 5,
-        "knowledgeIds": [policy_knowledge_id]
-    }
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Search",
+    auth=auth,
+    json={"query": "cancellation policy", "top": 5, "knowledgeIds": [policy_source_id]}
 ).json()
+
+for chunk in results["chunks"]:
+    print(f"[{chunk['score']:.3f}] {chunk['content'][:100]}")
 ```
 
-Omit `knowledgeIds` to search across all sources in the knowledge base.
+**Node.js**
+```javascript
+const results = await fetch(`${baseUrl}/v2/KnowledgeBases/${kbId}/Search`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ query: "cancellation policy", top: 5, knowledgeIds: [policySourceId] }),
+}).then(r => r.json());
 
-### Inspect Processed Chunks
+for (const chunk of results.chunks) {
+    console.log(`[${chunk.score.toFixed(3)}] ${chunk.content.slice(0, 100)}`);
+}
+```
 
-To audit what got indexed from a source:
+Omit `knowledgeIds` to search across all sources. Max 100 IDs per request.
 
+### Refresh a Web Source
+
+Re-crawl without changing config. Set `crawlPeriod` for automatic recrawling.
+
+**Python**
+```python
+requests.patch(
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Knowledge/{knowledge_id}?refresh=true",
+    auth=auth,
+    json={"name": "Product Documentation"}
+)
+
+requests.patch(
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Knowledge/{knowledge_id}",
+    auth=auth,
+    json={"name": "Product Documentation", "source": {"type": "Web", "crawlPeriod": "WEEKLY"}}
+)
+```
+
+**Node.js**
+```javascript
+await fetch(`${baseUrl}/v2/KnowledgeBases/${kbId}/Knowledge/${knowledgeId}?refresh=true`, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify({ name: "Product Documentation" }),
+});
+
+await fetch(`${baseUrl}/v2/KnowledgeBases/${kbId}/Knowledge/${knowledgeId}`, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify({ name: "Product Documentation", source: { type: "Web", crawlPeriod: "WEEKLY" } }),
+});
+```
+
+Crawl period options: `WEEKLY` | `BIWEEKLY` | `MONTHLY` | `NEVER`
+
+### Inspect Chunks
+
+Audit what was indexed from a source:
+
+**Python**
 ```python
 chunks = requests.get(
-    f"https://knowledge.twilio.com/v1/KnowledgeBases/{kb_id}/Knowledge/{knowledge_id}/Chunks",
-    auth=(account_sid, auth_token),
+    f"{base_url}/v2/KnowledgeBases/{kb_id}/Knowledge/{knowledge_id}/Chunks",
+    auth=auth,
     params={"pageSize": 50}
 ).json()
 
 for chunk in chunks["chunks"]:
-    print(chunk["content"][:100])
+    print(f"[{chunk['metadata']['sourceType']}] {chunk['content'][:100]}")
 ```
+
+**Node.js**
+```javascript
+const chunks = await fetch(
+    `${baseUrl}/v2/KnowledgeBases/${kbId}/Knowledge/${knowledgeId}/Chunks?pageSize=50`,
+    { headers: { "Authorization": authHeader } }
+).then(r => r.json());
+
+for (const chunk of chunks.chunks) {
+    console.log(`[${chunk.metadata.sourceType}] ${chunk.content.slice(0, 100)}`);
+}
+```
+
+Paginate with `pageToken` from `chunks.meta.nextToken`.
 
 ---
 
 ## CANNOT
 
-- **Cannot add sources before Knowledge Base is active** — Creation is async (returns 202). Poll `Location` header until `status: ACTIVE`.
-- **Cannot use one host for all operations** — Management is on `memory.twilio.com`; sources and search are on `knowledge.twilio.com`. Wrong host returns 404.
-- **Cannot include auth header when uploading to presigned URL** — `importUrl` is already signed. Adding your auth header will fail.
-- **Cannot use expired presigned URLs** — `uploadExpiration` is typically 1 hour. Upload promptly.
-- **Cannot search before processing completes** — Web crawl and file indexing are async (seconds to minutes). Poll status first.
-- **Cannot use high crawl depth without performance impact** — `crawlDepth` 1–10, default 2. Higher depths dramatically increase processing time.
-- **Cannot exceed 16MB per file upload** — Hard limit
-- **Cannot exceed 185,000 characters per text source** — Hard limit
-- **Cannot retrieve more than 20 search results per query** — `top-K` max is 20
-- **Cannot use spaces or underscores in `displayName`** — Alphanumeric and hyphens only (`^[a-zA-Z0-9-]+$`)
-- **Cannot use Knowledge for customer-specific context** — Knowledge is shared across all customers. Use `twilio-customer-memory` for per-customer context.
-- **Cannot retry FAILED sources** — Delete and recreate. No retry endpoint. Check chunk count after `COMPLETED` to verify extraction.
+- Cannot exceed 5 Knowledge Bases per account
+- Cannot exceed 10 knowledge sources per Knowledge Base
+- Cannot add sources before Knowledge Base is active — poll `statusUrl` until `COMPLETED`
+- Cannot use v1 endpoints — all routes use `/v2/` prefix on `knowledge.twilio.com`
+- Cannot include auth header when uploading to presigned URL — `importUrl` is already signed
+- Cannot search before source processing completes — poll source status first
+- Cannot exceed 16 MiB (16,777,216 bytes) per file upload
+- Cannot exceed 1,048,576 characters (~1MB) per text source pushed via API
+- Cannot exceed 2048 characters in a search query
+- Cannot exceed 2048 characters in a web source URL
+- Cannot retrieve more than 20 search results per query (`top` max is 20)
+- Cannot exceed 100 `knowledgeIds` in a search filter
+- Cannot set crawl depth beyond 1–10 levels for web sources
+- Cannot use custom crawl schedules — locked to fixed intervals: `WEEKLY`, `BIWEEKLY`, `MONTHLY`, or `NEVER`
+- Cannot use spaces or underscores in `displayName` — alphanumeric and hyphens only
+- Cannot use `name` longer than 30 characters for knowledge sources
+- Cannot modify immutable fields (`id`, `type`, `status`, `url`, `createdAt`, `updatedAt`) via PATCH
+- Cannot use Knowledge for per-customer context — use `twilio-conversation-memory` for that
 
 ---
 
 ## Next Steps
 
-- **Per-customer context:** `twilio-customer-memory` — combine with Enterprise Knowledge for full agent context (company knowledge + individual customer history)
-- **Conversation Intelligence operators with enterprise context:** `twilio-conversation-intelligence` — feed Enterprise Knowledge chunks into Conversation Intelligence operators to give them business context. Examples:
-  - **Script Adherence:** index your approved call scripts as a knowledge source; the operator can evaluate agent compliance against the retrieved script for the current conversation type
-  - **Custom upsell classifier:** index product offers, pricing tiers, or eligibility rules; a custom classification operator can use retrieved offer details to detect upsell opportunities mid-conversation
-  - **Next Best Response:** retrieved policy or FAQ chunks injected alongside the operator prompt improve suggestion quality
-- **Wire into a voice AI agent:** `twilio-voice-conversation-relay`
+- **Per-customer context:** `twilio-conversation-memory` — combine with Enterprise Knowledge for full agent context
+- **Background transcript intelligence:** `twilio-conversation-intelligence`
+- **Voice agent with ConversationRelay:** `twilio-voice-conversation-relay`
 - **TAC SDK integration:** `twilio-agent-connect`
 - **Debug integration issues:** `twilio-debugging-observability`
