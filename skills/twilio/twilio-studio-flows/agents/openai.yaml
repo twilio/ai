@@ -1,0 +1,10 @@
+interface:
+  display_name: "Studio Flows"
+  short_description: "Build and deploy Twilio Studio flows — visual IVR, SMS/WhatsApp, and conversation automation — by authoring flow definition JSON and managing it through the Studio REST API."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build with Twilio Studio?"
+
+policy:
+  allow_implicit_invocation: true
