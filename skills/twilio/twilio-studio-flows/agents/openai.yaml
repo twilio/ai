@@ -4,7 +4,7 @@ interface:
   icon_small: "./assets/icon-small.png"
   icon_large: "./assets/icon-large.png"
   brand_color: "#EF223A"
-  default_prompt: "How do I build an IVR menu with Twilio Studio?"
+  default_prompt: "How do I build with Twilio Studio?"
 
 policy:
   allow_implicit_invocation: true
