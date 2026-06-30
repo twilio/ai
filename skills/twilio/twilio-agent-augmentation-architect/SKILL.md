@@ -98,7 +98,7 @@ Trigger on any of these signals:
 - Identity resolution: Match incoming caller to Conversation Memory profile by phone number, email, or custom ID
 - Enrichment sources: Conversation Memory observations only, or also Segment traits via Bridge
 **GA constraint:** Flex integration is summary-only at GA. Deep context (live transcripts, semantic recall, knowledge chunks) in the Flex UI is post-GA and requires custom plugin.
-**Skills to install:** + `twilio-customer-memory`, `twilio-conversation-orchestrator`
+**Skills to install:** + `twilio-conversation-memory`, `twilio-conversation-orchestrator`
 
 ### Level 4: Route — Intelligence-Driven Routing
 **Developer says:** "I want AI signals to determine which agent gets the call — not just FIFO."
@@ -200,7 +200,7 @@ Recommended Architecture: [Brief plain-language description of the recommended a
 Reference Skills:
 - twilio-call-recordings (if recording needed)
 - twilio-conversation-intelligence (if transcription and AI insights needed)
-- twilio-customer-memory (if persistent customer context needed)
+- twilio-conversation-memory (if persistent customer context needed)
 - twilio-conversation-orchestrator (if multi-step orchestration needed)
 - twilio-taskrouter-routing (if intelligent routing needed)
 - twilio-voice-insights (for call quality diagnostics)

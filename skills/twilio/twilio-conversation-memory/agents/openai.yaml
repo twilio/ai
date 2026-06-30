@@ -1,6 +1,6 @@
 interface:
-  display_name: "Customer Memory"
-  short_description: "Store and retrieve customer context using Twilio Conversation Memory. Covers Memory Store, profile management, traits, observations, and semantic Recall."
+  display_name: "Conversation Memory"
+  short_description: "Store and retrieve conversation context using Twilio Conversation Memory. Covers Memory Store, profile management, traits, observations, and semantic Recall."
   icon_small: "./assets/icon-small.png"
   icon_large: "./assets/icon-large.png"
   brand_color: "#EF223A"
