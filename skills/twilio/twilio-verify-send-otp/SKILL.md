@@ -217,6 +217,70 @@ const service = await client.verify.v2.services.create({
 });
 ```
 
+
+### Custom Tags (Metadata)
+
+> **Updated in OAI 2.6.7**: Tags now appear in verification and message status event payloads. **Tags should not contain PII.**
+
+Attach metadata tags to verifications for tracking and analytics. Tags are included in:
+- Verification status events
+- Message status event payloads
+- Webhook callbacks
+
+**Python**
+```python
+import json
+
+verification = client.verify.v2 \
+    .services(os.environ["VERIFY_SERVICE_SID"]) \
+    .verifications \
+    .create(
+        to="+15558675310",
+        channel="sms",
+        tags=json.dumps({
+            "campaign_id": "summer_2024",
+            "user_segment": "premium",
+            "source": "mobile_app"
+        })
+    )
+```
+
+**Node.js**
+```node
+const verification = await client.verify.v2
+    .services(process.env.VERIFY_SERVICE_SID)
+    .verifications.create({
+        to: "+15558675310",
+        channel: "sms",
+        tags: JSON.stringify({
+            campaign_id: "summer_2024",
+            user_segment: "premium",
+            source: "mobile_app"
+        })
+    });
+```
+
+**⚠️ Security Warning**: Tags are visible in webhook payloads sent to your server. **Do not include PII** (personally identifiable information) such as:
+- ❌ Names, email addresses, or phone numbers
+- ❌ Social security numbers or identification numbers
+- ❌ Account credentials or passwords
+
+Use anonymous identifiers instead:
+- ✅ Internal user IDs, campaign IDs, session tokens
+- ✅ Source application names, user segments
+- ✅ Non-sensitive metadata for analytics
+
+**Limits**:
+- Maximum 10 tags per verification
+- Keys and values: 128 characters max each
+- Format: JSON string
+
+**Use cases**:
+- Track conversion funnels by campaign
+- Segment users by subscription tier
+- Identify verification source (web app vs mobile)
+- Link verifications to internal order/session IDs
+
 ### Verification Status Values
 
 | Status | Meaning |
