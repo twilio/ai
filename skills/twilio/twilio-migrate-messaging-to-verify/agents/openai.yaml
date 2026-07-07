@@ -1,0 +1,10 @@
+interface:
+  display_name: "Migrate Messaging to Verify"
+  short_description: "Migrate a self-built OTP flow from the Programmable Messaging API to Twilio Verify. Covers the before/after code mapping, custom codes, E.164 formatting, error translation, and a safe incremental cutover."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I migrate my SMS OTP flow from Programmable Messaging to Twilio Verify?"
+
+policy:
+  allow_implicit_invocation: true
