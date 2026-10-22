@@ -363,6 +363,17 @@ condition routes to the exit, `noMatch` routes back to the counter. Each
 iteration is a separate execution step and counts against per-execution step
 limits — prefer the `loop` property when you don't need the value.
 
+### Recipe: fetch each profile after "Multiple profiles found"
+
+Resolve Profile's `multipleFound` transition exposes `{{widgets.<name>.profiles.profiles}}`,
+an array of profile IDs only — no profile data, and no batch fetch. Fetch each
+one with a second Resolve Profile (`action: FETCH`) inside the counter loop above:
+the `split-based-on` compares `{{flow.variables.num}}` `less_than`
+`{{widgets.<resolve_widget>.profiles.profiles.length}}` to keep looping, and the
+FETCH widget's `profile_id` is `{{widgets.<resolve_widget>.profiles.profiles[<counter var>]}}`.
+Its `resolved` transition returns that profile in `profiles.profile`; route back
+to the counter after handling it. Each profile costs one execution step.
+
 ### Recipe: voice IVR menu
 
 `gather-input-on-call` → `split-based-on` → `connect-call-to`. Gather prompts and
