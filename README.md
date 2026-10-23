@@ -99,6 +99,13 @@ git clone https://github.com/twilio/ai.git
 cp -r ai/skills/ ~/.agents/skills/
 ```
 
+#### Neotask
+
+```bash
+# Install the plugin (includes Skills)
+neotask construct install twilio-developer-kit
+```
+
 #### Other tools (GitHub Copilot, Gemini CLI, JetBrains, etc.)
 
 Twilio Skills use the open [Agent Skills](https://agentskills.io) standard (`SKILL.md` format). Any tool supporting this standard can load them from the `skills/` directory in this repo.
