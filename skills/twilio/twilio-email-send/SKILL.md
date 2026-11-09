@@ -54,7 +54,9 @@ These are standard Twilio credentials — the same ones used for SMS, Voice, and
 The endpoint is **asynchronous** — it returns `202 Accepted` with an `operationId`, not a delivery confirmation.
 
 ```bash
-curl -X POST "https://comms.twilio.com/v1/Emails" \
+# Credentials go to curl on stdin (-K -), so the Auth Token never appears in the process list
+printf 'user = "%s:%s"\n' "$TWILIO_ACCOUNT_SID" "$TWILIO_AUTH_TOKEN" | \
+curl -K - -X POST "https://comms.twilio.com/v1/Emails" \
   --header "Content-Type: application/json" \
   --data '{
     "from": {
@@ -72,8 +74,7 @@ curl -X POST "https://comms.twilio.com/v1/Emails" \
       "html": "<p>Your message content in HTML format.</p>",
       "text": "Your message content in plain text."
     }
-  }' \
-  -u $TWILIO_ACCOUNT_SID:$TWILIO_AUTH_TOKEN
+  }'
 ```
 
 Response (`202 Accepted`):

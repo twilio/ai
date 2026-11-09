@@ -72,10 +72,11 @@ Create an OAuth App in the Twilio Console to get a Client ID and Client Secret.
 
 **cURL**
 ```bash
-curl -X POST 'https://oauth.twilio.com/v2/token' \
+# The secret is read from stdin (@-), so it never appears in the process list or shell history
+printf '%s' "$TWILIO_CLIENT_SECRET" | curl -X POST 'https://oauth.twilio.com/v2/token' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'client_id={ClientID}' \
-  -d 'client_secret={ClientSecret}' \
+  --data-urlencode 'client_secret@-' \
   -d 'grant_type=client_credentials'
 ```
 
