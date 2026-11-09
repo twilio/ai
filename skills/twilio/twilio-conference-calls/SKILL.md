@@ -67,7 +67,6 @@ app.post("/voice", (req, res) => {
     const response = new VoiceResponse();
     const dial = response.dial();
     dial.conference(
-        `room-${callSid}`,
         {
             startConferenceOnEnter: true,
             endConferenceOnExit: false,
@@ -75,7 +74,8 @@ app.post("/voice", (req, res) => {
             statusCallback: "https://yourapp.com/conference-events",
             statusCallbackEvent: "join leave",
             record: "record-from-start",
-        }
+        },
+        `room-${callSid}` // Node takes (attributes, name); a name-first call drops the attributes
     );
     res.type("text/xml").send(response.toString());
 });
@@ -89,27 +89,38 @@ After TaskRouter assigns a worker, dial the agent into the conference:
 
 **Python**
 ```python
+from twilio.twiml.voice_response import VoiceResponse
+
+def conference_twiml(conference_name, **attrs):
+    """Build <Dial><Conference> TwiML. The builder escapes the conference name."""
+    response = VoiceResponse()
+    response.dial().conference(conference_name, **attrs)
+    return str(response)
+
 # Called from your assignment callback or agent connect logic
 def connect_agent(conference_name, agent_phone):
     client.calls.create(
         to=agent_phone,
         from_="+15551234567",  # your Twilio number
-        twiml=f'''<Response>
-            <Dial>
-                <Conference>{conference_name}</Conference>
-            </Dial>
-        </Response>''',
+        twiml=conference_twiml(conference_name),
         status_callback="https://yourapp.com/agent-call-status"
     )
 ```
 
 **Node.js**
 ```node
+function conferenceTwiml(conferenceName, attributes = {}) {
+    // The builder escapes the conference name
+    const response = new VoiceResponse();
+    response.dial().conference(attributes, conferenceName);
+    return response.toString();
+}
+
 async function connectAgent(conferenceName, agentPhone) {
     await client.calls.create({
         to: agentPhone,
         from: "+15551234567",
-        twiml: `<Response><Dial><Conference>${conferenceName}</Conference></Dial></Response>`,
+        twiml: conferenceTwiml(conferenceName),
         statusCallback: "https://yourapp.com/agent-call-status",
     });
 }
@@ -135,7 +146,7 @@ def warm_transfer(conference_sid, original_agent_call_sid, new_agent_phone, conf
     client.calls.create(
         to=new_agent_phone,
         from_="+15551234567",
-        twiml=f'<Response><Dial><Conference>{conference_name}</Conference></Dial></Response>',
+        twiml=conference_twiml(conference_name),
         status_callback="https://yourapp.com/transfer-agent-status"
     )
 
@@ -169,7 +180,7 @@ def cold_transfer(conference_sid, original_agent_call_sid, new_agent_phone, conf
     client.calls.create(
         to=new_agent_phone,
         from_="+15551234567",
-        twiml=f'<Response><Dial><Conference>{conference_name}</Conference></Dial></Response>'
+        twiml=conference_twiml(conference_name)
     )
 ```
 
@@ -200,19 +211,16 @@ Supervisor joins the Conference and can speak to the agent only — the caller c
 
 **Python**
 ```python
-def add_coach(conference_sid, supervisor_phone, conference_name):
+def add_coach(conference_sid, supervisor_phone, conference_name, agent_call_sid):
     """Add supervisor as coach — speaks to agent only, caller can't hear."""
     client.calls.create(
         to=supervisor_phone,
         from_="+15551234567",
-        twiml=f'''<Response>
-            <Dial>
-                <Conference
-                    coach="{agent_call_sid}"
-                    statusCallback="https://yourapp.com/coach-events"
-                >{conference_name}</Conference>
-            </Dial>
-        </Response>'''
+        twiml=conference_twiml(
+            conference_name,
+            coach=agent_call_sid,
+            status_callback="https://yourapp.com/coach-events",
+        )
     )
 ```
 
@@ -222,11 +230,7 @@ async function addCoach(conferenceSid, supervisorPhone, conferenceName, agentCal
     await client.calls.create({
         to: supervisorPhone,
         from: "+15551234567",
-        twiml: `<Response>
-            <Dial>
-                <Conference coach="${agentCallSid}">${conferenceName}</Conference>
-            </Dial>
-        </Response>`,
+        twiml: conferenceTwiml(conferenceName, { coach: agentCallSid }),
     });
 }
 ```
@@ -247,7 +251,7 @@ def barge_in(conference_sid, supervisor_phone, conference_name):
     client.calls.create(
         to=supervisor_phone,
         from_="+15551234567",
-        twiml=f'<Response><Dial><Conference>{conference_name}</Conference></Dial></Response>'
+        twiml=conference_twiml(conference_name)
     )
 ```
 
