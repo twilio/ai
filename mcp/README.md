@@ -40,7 +40,7 @@ Transport: Streamable HTTP (no authentication required)
 /plugin install twilio-developer-kit@twilio
 
 # Option 2: Add MCP server directly
-claude mcp add twilio-docs -- npx -y @anthropic-ai/mcp-remote https://mcp.twilio.com/docs
+claude mcp add --transport http twilio-docs https://mcp.twilio.com/docs
 ```
 
 ### Cursor
