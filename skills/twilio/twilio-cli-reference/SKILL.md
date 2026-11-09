@@ -13,6 +13,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Commands that buy or release numbers, send messages, place calls, delete resources, or deploy act on a live account and can cost money or be irreversible. Confirm the exact command, account, and target with the user before running one. Use test credentials or read commands (`list`, `fetch`) to explore.
+
 The Twilio CLI lets you manage Twilio resources, send messages, configure webhooks, and deploy serverless functions directly from the terminal. AI coding agents can use CLI commands to provision resources and test integrations without writing application code.
 
 **Install:**
@@ -34,9 +36,9 @@ The Twilio CLI lets you manage Twilio resources, send messages, configure webhoo
 # First-time login — creates a local API key stored as a profile
 twilio login
 
-# Named profiles for multiple accounts
-twilio profiles:create --account-sid ACxxx --auth-token xxx --profile staging
-# Avoid --auth-token as a plain argument — it will be stored in shell history. Use TWILIO_AUTH_TOKEN env var instead.
+# Named profiles for multiple accounts (Account SID is a positional argument;
+# omit --auth-token and the CLI prompts for it with masked input, so it never lands in shell history)
+twilio profiles:create ACxxx --profile staging
 twilio profiles:list
 twilio profiles:use staging
 
@@ -57,7 +59,7 @@ twilio api:core:messages:list --account-sid ACxxx_SUBACCOUNT
 # Search available numbers (US local, area code 415)
 twilio api:core:available-phone-numbers:local:list --country-code US --area-code 415
 
-# Purchase a number
+# Purchase a number (billed monthly; confirm the number and price with the user first)
 twilio api:core:incoming-phone-numbers:create --phone-number "+14155551234"
 
 # List owned numbers
@@ -74,6 +76,7 @@ twilio phone-numbers:update +14155551234 \
 ## Send SMS
 
 ```bash
+# Sends a real, billed SMS; confirm the recipient and body with the user first
 twilio api:core:messages:create \
   --from "+14155551234" \
   --to "+14155556789" \
@@ -129,7 +132,7 @@ twilio webhook:invoke http://localhost:3000/sms --type sms
 
 ```bash
 # Debug logging on any command (logs to stderr)
-twilio api:core:messages:create --from +14155551234 --to +14155556789 --body "test" -l debug
+twilio api:core:messages:list --limit 5 -l debug
 
 # Real-time monitoring (requires plugin)
 twilio plugins:install @twilio-labs/plugin-watch
