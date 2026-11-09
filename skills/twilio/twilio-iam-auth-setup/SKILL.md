@@ -135,10 +135,11 @@ const client = require("twilio")(
 );
 ```
 
-Magic test numbers:
-- `+15005550006` — valid, can receive messages
-- `+15005550001` — invalid number (triggers error 21211)
-- `+15005550007` — number that cannot receive SMS (triggers error 21612)
+Magic test numbers for Messages (full list: [Test credentials](https://www.twilio.com/docs/iam/test-credentials)):
+- `+15005550006` — as `From`: valid number, passes all validation
+- `+15005550001` — as `To`: invalid number (triggers error 21211)
+- `+15005550002` — as `To`: Twilio cannot route to this number (triggers error 21612)
+- `+15005550009` — as `To`: number cannot receive SMS (triggers error 21614)
 
 ### Auth Token Rotation
 
