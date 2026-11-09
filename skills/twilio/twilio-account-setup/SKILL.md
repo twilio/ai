@@ -14,6 +14,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Buying a phone number, sending a message, and closing a subaccount act on a real account: they cost money or cannot be undone. Confirm each with the user before running it, and use test credentials to check setup without sending.
+
 Every Twilio skill requires an active Twilio account and credentials. This skill covers the one-time setup steps that are prerequisites for all other Twilio skills.
 
 ---
@@ -31,7 +33,7 @@ export TWILIO_AUTH_TOKEN=your_auth_token
 
 4. Buy a phone number at [Console > Phone Numbers > Buy a number](https://console.twilio.com/us1/develop/phone-numbers/search)
 
-5. Install the SDK and send your first message:
+5. Install the SDK and send your first message. To check your setup without sending a real SMS or spending credit, first run the same code with your test credentials and `from_="+15005550006"` (the magic number that always passes validation); see `twilio-iam-auth-setup`. The code below, with live credentials, sends a real SMS, so confirm the recipient first:
 
 **Python**
 ```bash
@@ -252,7 +254,7 @@ calls = parent_client.api.accounts(subaccount.sid).calls.list()
 - **Cannot undo a closed subaccount after 30 days** — Closed subaccounts are permanently deleted. Suspension is reversible; closure is not.
 - **Cannot transfer trial balance to a paid account** — Trial credits are forfeited on upgrade.
 - **Cannot send to unverified numbers on trial** — Only verified Caller IDs (up to 5) can receive messages or calls.
-- **Auth Token rotation invalidates ALL API keys** — This is a one-way door. Use API Keys from day one. See `twilio-security-api-auth`.
+- **Auth Token rotation breaks every integration that uses the Auth Token** — It invalidates `AccountSid:AuthToken` authentication and webhook signature validation. API keys are not affected, which is why you should use API Keys from day one. See `twilio-security-api-auth`.
 - **API Key secrets shown only once at creation** — Store them immediately. Cannot be retrieved afterward.
 - **AI Assistants and ConversationRelay require approval** — Limited access products. Activation is not instant.
 
