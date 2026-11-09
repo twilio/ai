@@ -191,10 +191,15 @@ def process_status(call_sid, call_status):
 
 ### 5. Fallback Chains
 
-When delivery on one channel fails, escalate to the next:
+When delivery on one channel fails, escalate to the next. Escalate only on delivery failures: if the recipient opted out (error 21610), stop. Falling back to voice or email would contact someone who asked not to be contacted.
 
 **Python**
 ```python
+from twilio.base.exceptions import TwilioRestException
+from twilio.twiml.voice_response import VoiceResponse
+
+OPT_OUT_CODES = {21610}  # recipient replied STOP
+
 async def send_with_fallback(client, to, message, messaging_service_sid):
     """Try SMS → Voice → Email fallback chain."""
     
@@ -207,22 +212,26 @@ async def send_with_fallback(client, to, message, messaging_service_sid):
         # Wait for delivery confirmation via StatusCallback
         # If undelivered after timeout, fall through to voice
         return {"channel": "sms", "sid": msg.sid}
-    except Exception:
-        pass  # SMS failed, try voice
+    except TwilioRestException as e:
+        if e.code in OPT_OUT_CODES:
+            return {"channel": None, "status": "opted_out"}  # do not fall back
+        # Other SMS failure: try voice
     
     # Fallback to voice
     try:
+        twiml = VoiceResponse()
+        twiml.say(message)  # the builder escapes the message text
         call = client.calls.create(
             to=to, from_="+15551234567",
-            twiml=f"<Response><Say>{message}</Say></Response>",
+            twiml=str(twiml),
             status_callback="https://yourapp.com/call-status"
         )
         return {"channel": "voice", "sid": call.sid}
-    except Exception:
+    except TwilioRestException:
         pass  # Voice failed, try email
     
     # Last resort: email
-    # Use SendGrid — see twilio-sendgrid-email
+    # Use SendGrid — see twilio-sendgrid-email-send
     return {"channel": "email", "status": "queued"}
 ```
 
