@@ -9,6 +9,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before creating, rotating, or deleting credentials. Rotating the Auth Token or deleting an API key immediately breaks every integration that uses it. Never print secret values.
+
 Twilio supports multiple authentication methods. For most developers: use Auth Token for local prototyping, then move to API Keys in production.
 
 | Method | Use for | Security |

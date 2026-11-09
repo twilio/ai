@@ -11,6 +11,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Before sending, always confirm the recipient, sender, and message content with the user. A sent message cannot be recalled and incurs charges. Never send autonomously or in bulk without explicit user approval, and never message a recipient who has opted out (error 21610).
+
 **WhatsApp is one channel in Twilio's Messaging platform.** All channels share the same `messages.create()` API — see `twilio-messaging-overview` for the full channel comparison and onboarding sequence.
 
 Twilio routes WhatsApp through the Programmable Messaging API — all numbers use `whatsapp:+E.164` prefix. Two sending modes apply: **free-form** (within 24 hrs of last inbound) and **template** (anytime). Sending free-form outside the window causes silent delivery failure — always check which mode is required.

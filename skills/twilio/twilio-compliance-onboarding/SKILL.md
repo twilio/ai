@@ -10,6 +10,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before submitting any registration (A2P 10DLC brand or campaign, toll-free verification, WhatsApp sender). Submissions are reviewed, can take days, can be rejected, and some carry fees.
+
 Most Twilio channels require registration or approval before traffic flows. **Skipping this step is the #1 onboarding mistake** — developers build first, then discover messages are blocked or calls labeled as spam.
 
 **Lifecycle:** Choose numbers/senders (`twilio-numbers-senders`) → Register them (this skill) → Follow traffic rules (`twilio-compliance-traffic`)

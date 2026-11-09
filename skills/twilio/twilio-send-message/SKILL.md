@@ -14,6 +14,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Before sending, always confirm the recipient, sender, and message content with the user. A sent message cannot be recalled and incurs charges. Never send autonomously or in bulk without explicit user approval, and never message a recipient who has opted out (error 21610).
+
 **A single `messages.create()` call sends on any messaging channel — SMS, MMS, RCS, or WhatsApp.** The channel is determined by the sender address and the recipient's capabilities. For channel selection guidance and the full onboarding sequence, see `twilio-messaging-overview` and `twilio-messaging-channel-advisor`.
 
 | Channel | `to` format | Notes | Template required? |

@@ -11,6 +11,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Before sending, always confirm the recipient, sender, and message content with the user. A sent message cannot be recalled and incurs charges. Never send autonomously or in bulk without explicit user approval, and never message a recipient who has opted out (error 21610).
+
 **SMS is one channel in Twilio's Messaging platform.** All channels — SMS, WhatsApp, RCS, Facebook Messenger — share the same `messages.create()` API. See `twilio-messaging-overview` for the full channel comparison and onboarding sequence.
 
 | When to use SMS | When to consider alternatives |

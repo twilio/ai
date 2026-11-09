@@ -10,6 +10,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before sending a template, submitting a template for WhatsApp approval, or deleting a template. Sends reach real recipients and are billed, approval requests go to Meta for review, and deletion cannot be undone.
+
 The Content API creates channel-agnostic templates identified by a `ContentSid` (`HX...`). WhatsApp templates must be approved by Meta before use outside the 24-hour service window.
 
 ---

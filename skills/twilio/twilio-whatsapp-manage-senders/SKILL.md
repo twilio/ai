@@ -9,6 +9,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before creating, registering, or changing a WhatsApp sender. Registration submits the business profile to Meta for review and affects live messaging.
+
 A WhatsApp sender is a phone number registered with WhatsApp Business through Twilio. Registration goes through a lifecycle of statuses before becoming `ONLINE`. Sandbox testing does not require a registered sender — see `twilio-whatsapp-send-message`.
 
 ---

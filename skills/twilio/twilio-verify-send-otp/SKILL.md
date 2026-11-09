@@ -12,6 +12,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Before starting a verification, confirm the recipient and channel with the user. Each verification sends a real SMS, call, email, or WhatsApp message and is billed. Never start verifications in bulk or in a loop without explicit user approval. Test credentials do not support Verify, so test with mocks instead of real numbers.
+
 Use **Twilio Verify** to manage the full OTP lifecycle: code generation, delivery, expiry, rate limiting, and Fraud Guard protection. Use the **Programmable Messaging API** to build your own OTP message infrastructure and access features such as SMS Pumping Protection.
 
 | | Twilio Verify | Programmable Messaging API |

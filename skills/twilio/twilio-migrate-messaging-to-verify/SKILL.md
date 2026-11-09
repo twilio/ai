@@ -14,6 +14,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before switching production OTP traffic to Verify or sending a verification to a real number. Each verification sends a real, billed message. Test credentials do not support Verify, so test with mocks.
+
 If you built OTP on the **Programmable Messaging API**, you are maintaining code
 that Twilio Verify manages for you: random code generation, a database of codes
 with expiry, resend/rate-limit logic, and fraud filtering. **Verify** replaces

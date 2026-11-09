@@ -9,6 +9,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Before dialing anyone into a conference, confirm each number and intent with the user. Outbound calls are irreversible and may incur charges. For automated dial-outs, follow the TCPA guidance in `twilio-voice-outbound-calls`.
+
 Conference is the foundation of contact center call handling. The key insight: **every call that might need a transfer should start as a Conference**, not a direct `<Dial>`. A Conference supports hold, transfer, coaching, and recording — a direct Dial does not.
 
 ```

@@ -10,6 +10,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before creating or changing a Messaging Service, adding or removing senders, or sending through it. Changes apply to live traffic for every sender in the pool.
+
 A Messaging Service groups senders (phone numbers, short codes, toll-free numbers) with shared configuration. Send via `messagingServiceSid` instead of a specific `from` number — Twilio picks the best sender automatically.
 
 **Use a Messaging Service for all production sends.** Beyond sender pools, it unlocks compliance toolkit, SMS pumping protection, link shortening, message scheduling, and intelligent alerts. For channel selection guidance, see `twilio-messaging-overview`.

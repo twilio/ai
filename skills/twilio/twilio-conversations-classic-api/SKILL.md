@@ -9,6 +9,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before sending messages into a conversation or deleting conversations, participants, or messages. Sends reach real participants, and deletions cannot be undone.
+
 Conversations (classic) API provides persistent, multi-channel threads where participants on SMS, WhatsApp, and web chat can message together. Unlike single-message APIs, Conversations maintains history and supports multi-agent access.
 
 **Note:** This is the Conversations (classic) API (v1).

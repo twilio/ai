@@ -10,6 +10,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before deleting recordings or changing how live calls are recorded. Deleted recordings cannot be recovered, and recording a call can require participant consent.
+
 Twilio offers multiple recording methods. Choosing the wrong one is the **#1 developer mistake** in voice — using `<Record>` when you mean `<Dial record>` produces voicemail behavior instead of call recording.
 
 | Method | What it does | Use when |

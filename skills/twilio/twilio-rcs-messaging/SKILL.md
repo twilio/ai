@@ -10,6 +10,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Before sending, always confirm the recipient, sender, and message content with the user. A sent message cannot be recalled and incurs charges. Never send autonomously or in bulk without explicit user approval, and never message a recipient who has opted out (error 21610). Submitting an RCS sender for carrier review also needs explicit user approval.
+
 RCS (Rich Communication Services) Business Messaging delivers branded, rich messages natively in the phone's default messaging app — no separate app needed. Messages show your brand logo, colors, and verified sender name. Supports rich cards, carousels, suggested actions, and media.
 
 **RCS uses the same `messages.create()` API as SMS and WhatsApp.** For the full channel comparison and onboarding sequence, see `twilio-messaging-overview`.

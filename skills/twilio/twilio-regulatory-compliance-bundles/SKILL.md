@@ -10,6 +10,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Confirm with the user before submitting a bundle for review or purchasing a number. Submissions are reviewed by Twilio and can be rejected, and phone numbers carry recurring charges.
+
 Phone numbers are national resources — many countries require **identity verification of the end-user** before provisioning. A Regulatory Bundle is a container holding an End-User record + Supporting Documents that proves your right to use numbers in a specific country.
 
 **Not all countries require bundles** — check the [Regulatory Guidelines page](https://www.twilio.com/en-us/guidelines/regulatory) for country-specific requirements. If a country requires a bundle, provisioning fails without one.
