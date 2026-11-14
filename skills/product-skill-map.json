@@ -1,0 +1,500 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Twilio OpenAPI Product to Skill Mapping",
+  "description": "Maps Twilio's OpenAPI products (the `product` enum exposed by the Twilio docs MCP, which corresponds 1:1 with Twilio's published OpenAPI specs) to the Agent Skills in this repository. Product keys are the canonical OpenAPI spec identifiers. Each skill is mapped to the product(s) whose API surface it primarily teaches. Planner/guardrail skills that span multiple products are mapped to every product they materially cover.",
+  "version": "1.0.0",
+  "generatedFrom": {
+    "products": "Twilio docs MCP `product` enum (https://mcp.twilio.com/docs) — 42 OpenAPI specs",
+    "skills": "skills/ directory in this repo — 55 SKILL.md files (47 twilio, 8 sendgrid)"
+  },
+  "skillTiers": {
+    "setup": "Account, auth, number, and credential configuration",
+    "planner": "Use-case qualification and product selection (frontmatter tier: discover)",
+    "product": "How to use one Twilio product's API correctly",
+    "guardrail": "Operational patterns preventing production failures (security, reliability, compliance, observability)"
+  },
+  "products": {
+    "api_v2010": {
+      "label": "Core Twilio REST API (api.twilio.com 2010-04-01)",
+      "summary": "Accounts, Calls, Messages (SMS/MMS), phone numbers, recordings, conferences, usage.",
+      "skills": {
+        "primary": [
+          "twilio-account-setup",
+          "twilio-send-message",
+          "twilio-sms-send-message",
+          "twilio-whatsapp-send-message",
+          "twilio-voice-outbound-calls",
+          "twilio-voice-twiml",
+          "twilio-conference-calls",
+          "twilio-call-recordings",
+          "twilio-numbers-senders"
+        ],
+        "related": [
+          "twilio-cli-reference",
+          "twilio-messaging-channel-advisor",
+          "twilio-notifications-alerts-advisor",
+          "twilio-marketing-promotions-advisor",
+          "twilio-customer-support-architect"
+        ]
+      }
+    },
+    "messaging": {
+      "label": "Programmable Messaging (Messaging Services, A2P)",
+      "summary": "Messaging Services, sender pools, A2P brand/campaign registration, compliance toolkit.",
+      "skills": {
+        "primary": [
+          "twilio-messaging-services",
+          "twilio-messaging-overview",
+          "twilio-messaging-webhooks",
+          "twilio-isv-sms-best-practices"
+        ],
+        "related": [
+          "twilio-send-message",
+          "twilio-sms-send-message",
+          "twilio-messaging-channel-advisor",
+          "twilio-marketing-promotions-advisor",
+          "twilio-notifications-alerts-advisor",
+          "twilio-compliance-onboarding",
+          "twilio-compliance-traffic",
+          "twilio-reliability-patterns"
+        ]
+      }
+    },
+    "content": {
+      "label": "Content API (message templates)",
+      "summary": "Rich content templates for WhatsApp, SMS, RCS, MMS; ContentSid; WhatsApp approval.",
+      "skills": {
+        "primary": ["twilio-content-template-builder"],
+        "related": [
+          "twilio-send-message",
+          "twilio-whatsapp-send-message",
+          "twilio-rcs-messaging"
+        ]
+      }
+    },
+    "verify": {
+      "label": "Verify (OTP / 2FA)",
+      "summary": "One-time passcodes over SMS/voice/email/WhatsApp/RCS, TOTP factors, service config.",
+      "skills": {
+        "primary": ["twilio-verify-send-otp"],
+        "related": ["twilio-identity-verification-advisor"]
+      }
+    },
+    "lookups": {
+      "label": "Lookup v2 (phone intelligence)",
+      "summary": "Number validation, line type, SIM swap, caller name, identity match, SMS pumping risk.",
+      "skills": {
+        "primary": ["twilio-lookup-phone-intelligence"],
+        "related": ["twilio-identity-verification-advisor"]
+      }
+    },
+    "voice": {
+      "label": "Programmable Voice (voice.twilio.com)",
+      "summary": "ConversationRelay, SIP, BYOC, dialing settings, voice configuration beyond api_v2010.",
+      "skills": {
+        "primary": [
+          "twilio-voice-conversation-relay",
+          "twilio-voice-outbound-calls",
+          "twilio-voice-twiml"
+        ],
+        "related": [
+          "twilio-conference-calls",
+          "twilio-call-recordings",
+          "twilio-ai-agent-architect"
+        ]
+      }
+    },
+    "conversations": {
+      "label": "Conversations (classic multi-channel)",
+      "summary": "Persistent multi-party, multi-channel conversations across SMS/WhatsApp/chat; Conversation Orchestrator auto-capture/routing.",
+      "skills": {
+        "primary": [
+          "twilio-conversations-classic-api",
+          "twilio-conversation-orchestrator"
+        ],
+        "related": [
+          "twilio-ai-agent-architect",
+          "twilio-customer-support-architect"
+        ]
+      }
+    },
+    "intelligence": {
+      "label": "Conversation Intelligence",
+      "summary": "Transcription, language operators, sentiment, agent assist, conversation insights.",
+      "skills": {
+        "primary": ["twilio-conversation-intelligence"],
+        "related": [
+          "twilio-agent-augmentation-architect",
+          "twilio-call-recordings",
+          "twilio-conversation-orchestrator"
+        ]
+      }
+    },
+    "memory": {
+      "label": "Conversation Memory",
+      "summary": "Memory Store, customer profiles, traits, observations, semantic Recall.",
+      "skills": {
+        "primary": ["twilio-customer-memory"],
+        "related": [
+          "twilio-agent-connect",
+          "twilio-agent-augmentation-architect",
+          "twilio-ai-agent-architect",
+          "twilio-conversation-orchestrator"
+        ]
+      }
+    },
+    "knowledge": {
+      "label": "Enterprise Knowledge",
+      "summary": "Knowledge Base provisioning, source upload, semantic retrieval for grounding agents.",
+      "skills": {
+        "primary": ["twilio-enterprise-knowledge"],
+        "related": ["twilio-ai-agent-architect"]
+      }
+    },
+    "taskrouter": {
+      "label": "TaskRouter",
+      "summary": "Workers, Task Queues, Workflows, Reservations, skills-based routing.",
+      "skills": {
+        "primary": ["twilio-taskrouter-routing"],
+        "related": [
+          "twilio-customer-support-architect",
+          "twilio-agent-augmentation-architect"
+        ]
+      }
+    },
+    "trusthub": {
+      "label": "TrustHub (regulatory compliance & trust)",
+      "summary": "Customer Profiles, Trust Products, compliance inquiries, regulatory bundles, branded calling/CNAM.",
+      "skills": {
+        "primary": [
+          "twilio-regulatory-compliance-bundles",
+          "twilio-compliance-onboarding"
+        ],
+        "related": [
+          "twilio-numbers-senders",
+          "twilio-isv-sms-best-practices"
+        ]
+      }
+    },
+    "numbers": {
+      "label": "Phone Numbers (provisioning, porting, bundles)",
+      "summary": "Number purchase, porting, hosted numbers, regulatory bundle attachment.",
+      "skills": {
+        "primary": ["twilio-numbers-senders"],
+        "related": [
+          "twilio-regulatory-compliance-bundles",
+          "twilio-compliance-onboarding",
+          "twilio-account-setup"
+        ]
+      }
+    },
+    "iam": {
+      "label": "IAM (auth, API keys, tokens)",
+      "summary": "API keys, auth tokens, access tokens, credential rotation.",
+      "skills": {
+        "primary": [
+          "twilio-iam-auth-setup",
+          "twilio-security-api-auth"
+        ],
+        "related": ["twilio-security-hardening"]
+      }
+    },
+    "oauth": {
+      "label": "OAuth (OAuth2 client_credentials, tokens)",
+      "summary": "Time-limited bearer tokens via client_credentials grant.",
+      "skills": {
+        "primary": ["twilio-security-api-auth"],
+        "related": ["twilio-iam-auth-setup"]
+      }
+    },
+    "iam_organizations": {
+      "label": "IAM Organizations",
+      "summary": "Organization > Account > Subaccount hierarchy, roles, domains, SSO enforcement.",
+      "skills": {
+        "primary": ["twilio-organizations-setup"],
+        "related": ["twilio-account-setup"]
+      }
+    },
+    "iam_scim": {
+      "label": "IAM SCIM",
+      "summary": "SCIM user/group provisioning for Organizations.",
+      "skills": {
+        "primary": ["twilio-organizations-setup"],
+        "related": []
+      }
+    },
+    "accounts": {
+      "label": "Accounts API",
+      "summary": "Account and subaccount management, auth token rotation.",
+      "skills": {
+        "primary": ["twilio-account-setup"],
+        "related": [
+          "twilio-organizations-setup",
+          "twilio-security-hardening",
+          "twilio-isv-sms-best-practices"
+        ]
+      }
+    },
+    "monitor": {
+      "label": "Monitor (Alerts, Events)",
+      "summary": "Debugger alerts, account events, Monitor Alerts API.",
+      "skills": {
+        "primary": ["twilio-debugging-observability"],
+        "related": ["twilio-reliability-patterns"]
+      }
+    },
+    "events": {
+      "label": "Event Streams",
+      "summary": "Sinks and subscriptions for streaming Twilio events to external systems.",
+      "skills": {
+        "primary": ["twilio-debugging-observability"],
+        "related": [
+          "twilio-webhook-architecture",
+          "twilio-reliability-patterns"
+        ]
+      }
+    },
+    "sendgrid": {
+      "label": "SendGrid v3 (Twilio SendGrid email)",
+      "summary": "Mail Send, dynamic templates, tracking, suppressions, event webhooks, inbound parse, SEQ.",
+      "skills": {
+        "primary": [
+          "twilio-sendgrid-account-setup",
+          "twilio-sendgrid-email-send",
+          "twilio-sendgrid-email-settings",
+          "twilio-sendgrid-suppressions",
+          "twilio-sendgrid-webhooks",
+          "twilio-sendgrid-inbound-parse",
+          "twilio-sendgrid-engagement-quality",
+          "twilio-sendgrid-deliverability-advisor"
+        ],
+        "related": []
+      }
+    },
+    "tsg": {
+      "label": "Twilio SendGrid (TSG API key / account management v3)",
+      "summary": "SendGrid API key lifecycle and account-management endpoints (same OpenAPI family as `sendgrid`).",
+      "skills": {
+        "primary": ["twilio-sendgrid-account-setup"],
+        "related": [
+          "twilio-sendgrid-email-send",
+          "twilio-sendgrid-deliverability-advisor"
+        ]
+      }
+    },
+    "flex": {
+      "label": "Flex (configuration / SDK)",
+      "summary": "Flex contact center configuration.",
+      "skills": {
+        "primary": [],
+        "related": [
+          "twilio-customer-support-architect",
+          "twilio-taskrouter-routing",
+          "twilio-security-compliance-hipaa"
+        ]
+      }
+    },
+    "flex-api": {
+      "label": "Flex API",
+      "summary": "Flex channels, interactions, plugins, configuration via REST.",
+      "skills": {
+        "primary": [],
+        "related": [
+          "twilio-customer-support-architect",
+          "twilio-taskrouter-routing"
+        ]
+      }
+    },
+    "frontline": {
+      "label": "Frontline",
+      "summary": "Frontline user and conversation routing for relationship-based engagement.",
+      "skills": {
+        "primary": [],
+        "related": ["twilio-conversations-classic-api"]
+      }
+    },
+    "chat": {
+      "label": "Programmable Chat (v2, legacy)",
+      "summary": "Chat services, channels, members (superseded by Conversations).",
+      "skills": {
+        "primary": [],
+        "related": ["twilio-conversations-classic-api"]
+      }
+    },
+    "ip_messaging": {
+      "label": "IP Messaging (v1, legacy)",
+      "summary": "Legacy IP Messaging (superseded by Chat/Conversations).",
+      "skills": {
+        "primary": [],
+        "related": ["twilio-conversations-classic-api"]
+      }
+    },
+    "proxy": {
+      "label": "Proxy (masked communications)",
+      "summary": "Number-masked sessions between parties.",
+      "skills": {
+        "primary": [],
+        "related": ["twilio-numbers-senders"]
+      }
+    },
+    "notify": {
+      "label": "Notify",
+      "summary": "Multi-channel push/SMS notifications and bindings.",
+      "skills": {
+        "primary": [],
+        "related": [
+          "twilio-notifications-alerts-advisor",
+          "twilio-send-message"
+        ]
+      }
+    },
+    "studio": {
+      "label": "Studio (Flows)",
+      "summary": "Visual flow builder execution and flow management.",
+      "skills": {
+        "primary": [],
+        "related": [
+          "twilio-customer-support-architect",
+          "twilio-ai-agent-architect"
+        ]
+      }
+    },
+    "sync": {
+      "label": "Sync",
+      "summary": "Real-time state synchronization (documents, lists, maps, streams).",
+      "skills": {
+        "primary": [],
+        "related": []
+      }
+    },
+    "serverless": {
+      "label": "Serverless (Functions & Assets)",
+      "summary": "Twilio Functions, Assets, Services, deployments.",
+      "skills": {
+        "primary": [],
+        "related": [
+          "twilio-cli-reference",
+          "twilio-webhook-architecture"
+        ]
+      }
+    },
+    "trunking": {
+      "label": "Elastic SIP Trunking",
+      "summary": "SIP trunks, origination/termination, credential lists.",
+      "skills": {
+        "primary": [],
+        "related": ["twilio-voice-outbound-calls"]
+      }
+    },
+    "insights": {
+      "label": "Voice Insights",
+      "summary": "Call quality metrics, summaries, and events.",
+      "skills": {
+        "primary": [],
+        "related": [
+          "twilio-debugging-observability",
+          "twilio-voice-outbound-calls"
+        ]
+      }
+    },
+    "pricing": {
+      "label": "Pricing",
+      "summary": "Messaging, voice, and phone number pricing by country.",
+      "skills": {
+        "primary": [],
+        "related": []
+      }
+    },
+    "routes": {
+      "label": "Routes (Inference / SIP routing)",
+      "summary": "Phone number and SIP domain route configuration.",
+      "skills": {
+        "primary": [],
+        "related": ["twilio-voice-outbound-calls"]
+      }
+    },
+    "video": {
+      "label": "Programmable Video",
+      "summary": "Rooms, participants, recordings, compositions.",
+      "skills": {
+        "primary": [],
+        "related": []
+      }
+    },
+    "bulkexports": {
+      "label": "Bulk Exports",
+      "summary": "Bulk export jobs and day-level data dumps.",
+      "skills": {
+        "primary": [],
+        "related": ["twilio-debugging-observability"]
+      }
+    }
+  },
+  "crossCuttingSkills": {
+    "description": "Skills that are not tied to a single OpenAPI product — they apply across many products. Listed here with the products they touch (also reflected in each product's `related` list).",
+    "twilio-security-hardening": {
+      "tier": "guardrail",
+      "appliesTo": ["iam", "oauth", "accounts", "api_v2010", "messaging", "voice"]
+    },
+    "twilio-security-compliance-hipaa": {
+      "tier": "guardrail",
+      "appliesTo": ["voice", "messaging", "intelligence", "verify", "flex"]
+    },
+    "twilio-compliance-traffic": {
+      "tier": "guardrail",
+      "appliesTo": ["messaging", "voice", "api_v2010", "content"]
+    },
+    "twilio-compliance-onboarding": {
+      "tier": "guardrail",
+      "appliesTo": ["messaging", "trusthub", "numbers", "content", "voice"]
+    },
+    "twilio-reliability-patterns": {
+      "tier": "guardrail",
+      "appliesTo": ["api_v2010", "messaging", "voice", "events"]
+    },
+    "twilio-debugging-observability": {
+      "tier": "guardrail",
+      "appliesTo": ["monitor", "events", "insights", "bulkexports"]
+    },
+    "twilio-webhook-architecture": {
+      "tier": "guardrail",
+      "appliesTo": ["messaging", "voice", "verify", "events", "serverless"]
+    },
+    "twilio-cli-reference": {
+      "tier": "setup",
+      "appliesTo": ["api_v2010", "messaging", "serverless", "numbers"]
+    }
+  },
+  "plannerSkills": {
+    "description": "tier: discover planner skills that recommend products rather than teaching one. Mapped to the candidate products they reason across.",
+    "twilio-ai-agent-architect": ["voice", "conversations", "memory", "knowledge", "intelligence"],
+    "twilio-agent-augmentation-architect": ["intelligence", "memory", "taskrouter"],
+    "twilio-customer-support-architect": ["conversations", "taskrouter", "voice", "flex", "studio"],
+    "twilio-identity-verification-advisor": ["verify", "lookups"],
+    "twilio-messaging-channel-advisor": ["messaging", "content", "api_v2010"],
+    "twilio-marketing-promotions-advisor": ["messaging", "content", "api_v2010"],
+    "twilio-notifications-alerts-advisor": ["messaging", "notify", "api_v2010", "verify"],
+    "twilio-email-deliverability-advisor": ["sendgrid"],
+    "twilio-sendgrid-deliverability-advisor": ["sendgrid"],
+    "twilio-agent-connect": ["memory", "conversations", "voice", "messaging"]
+  },
+  "unmappedSkills": {
+    "description": "Skills with no dedicated OpenAPI product spec in the MCP enum.",
+    "twilio-email-send": {
+      "reason": "Twilio Email API (comms.twilio.com/v1/Emails) is not exposed as a distinct product in the docs MCP `product` enum. Distinct from SendGrid (`sendgrid`/`tsg`).",
+      "closestProduct": null
+    },
+    "twilio-email-deliverability-advisor": {
+      "reason": "Advisory for the Twilio Email API (comms.twilio.com); same gap as twilio-email-send.",
+      "closestProduct": null
+    },
+    "twilio-rcs-messaging": {
+      "reason": "RCS sending is delivered through the Messaging/Content APIs and channel sender onboarding rather than a standalone RCS OpenAPI product.",
+      "closestProduct": "messaging"
+    },
+    "twilio-whatsapp-manage-senders": {
+      "reason": "WhatsApp sender management uses the Messaging Channels Senders API, part of the messaging surface; no standalone WhatsApp product spec.",
+      "closestProduct": "messaging"
+    }
+  }
+}
